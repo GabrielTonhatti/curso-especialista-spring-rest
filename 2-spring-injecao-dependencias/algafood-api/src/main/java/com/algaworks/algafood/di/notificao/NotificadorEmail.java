@@ -2,11 +2,10 @@ package com.algaworks.algafood.di.notificao;
 
 import com.algaworks.algafood.di.modelo.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
-@Profile("prod")
+//@Profile("prod")
 @TipoDoNotificador(value = NivelUrgencia.SEM_URGENCIA)
 public class NotificadorEmail implements Notificador {
 
