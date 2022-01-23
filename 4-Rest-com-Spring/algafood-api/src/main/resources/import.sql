@@ -21,9 +21,8 @@ INSERT INTO cidade (id, nome, estado_id) VALUES (8, 'Campinas', 2);
 INSERT INTO cidade (id, nome, estado_id) VALUES (9, 'Fortaleza', 3);
 
 INSERT INTO forma_pagamento(id,descricao) VALUES (1, 'Pix');
-INSERT INTO forma_pagamento(id,descricao) VALUES (2, 'Boleto');
 INSERT INTO forma_pagamento(id, descricao) VALUES (3, 'Cartão de Crédito');
-INSERT INTO forma_pagamento (id, descricao) VALUES (4, 'Cartão de débito');
+INSERT INTO forma_pagamento (id, descricao) VALUES (4, 'Cartão de Débito');
 INSERT INTO forma_pagamento (id, descricao) VALUES (5, 'Dinheiro');
 
 INSERT INTO permissao (id, nome, descricao) VALUES (1, 'CONSULTAR_COZINHAS', 'Permite consultar cozinhas');
