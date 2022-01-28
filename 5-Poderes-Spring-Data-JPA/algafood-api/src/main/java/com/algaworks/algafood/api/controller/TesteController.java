@@ -5,7 +5,9 @@ import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.repository.CozinhaRepository;
 import com.algaworks.algafood.domain.repository.RestauranteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -36,6 +38,13 @@ public class TesteController {
         return cozinhaRepository.existsByNome(nome);
     }
 
+    @GetMapping("/cozinhas/primeiro")
+    public Optional<Cozinha> cozinhaPrimeiro() {
+
+        return cozinhaRepository.buscarPrimeiro();
+    }
+
+
     @GetMapping("/restaurantes/por-taxa-frete")
     public List<Restaurante> resturantesPorTaxaFrete(BigDecimal taxaInicial, BigDecimal taxaFinal) {
         return restauranteRepository.queryByTaxaFreteBetween(taxaInicial, taxaFinal);
@@ -57,13 +66,26 @@ public class TesteController {
     }
 
     @GetMapping("/restaurantes/por-nome-e-frete")
-    public List<Restaurante> resturantesPorNomeFrete(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
+    public List<Restaurante> resturantesPorNomeFrete(String nome, BigDecimal taxaFreteInicial,
+                                                     BigDecimal taxaFreteFinal) {
         return restauranteRepository.find(nome, taxaFreteInicial, taxaFreteFinal);
     }
 
     @GetMapping("/restaurantes/count-por-cozinha")
     public int resturantesCountPorCozinha(Long cozinhaId) {
         return restauranteRepository.countByCozinhaId(cozinhaId);
+    }
+
+    @GetMapping("/restaurantes/com-frete-gratis")
+    public List<Restaurante> resturantesComFreteGratis(String nome) {
+
+        return restauranteRepository.findComFreteGratis(nome);
+    }
+
+    @GetMapping("/restaurantes/primeiro")
+    public Optional<Restaurante> resturantePrimeiro() {
+
+        return restauranteRepository.buscarPrimeiro();
     }
 
 }
