@@ -22,9 +22,6 @@ public class CadastroCidadeService {
     private CidadeRepository cidadeRepository;
 
     @Autowired
-    private EstadoRepository estadoRepository;
-
-    @Autowired
     private CadastroEstadoService cadastroEstado;
 
     public Cidade salvar(Cidade cidade) {
