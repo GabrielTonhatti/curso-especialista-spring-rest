@@ -28,9 +28,6 @@ public class RestauranteController {
     @Autowired
     private CadastroRestauranteService cadastroRestaurante;
 
-    @Autowired
-    private CozinhaRepository cozinhaRepository;
-
     @GetMapping
     public List<Restaurante> listar() {
         return restauranteRepository.findAll();
