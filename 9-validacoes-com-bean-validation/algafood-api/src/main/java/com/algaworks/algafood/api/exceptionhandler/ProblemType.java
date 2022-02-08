@@ -10,7 +10,8 @@ public enum ProblemType {
     RECURSO_NAO_ENCONTRADO("/recurso-nao-encontrado", "Recurso não encontrado"),
     MENSAGEM_INCOMPREENSIVEL("/mensagem-incompreensivel", "Mensagem Incompreensível"),
     PARAMETRO_INVALIDO("/parametro-invalido", "Parâmetro Inválido"),
-    ERRO_DE_SISTEMA("/erro-de-sistema", "Erro de sistema");
+    ERRO_DE_SISTEMA("/erro-de-sistema", "Erro de sistema"),
+    DADOS_INVALIDOS("/dados-invalidos", "Dados inválidos");
 
     private String title;
     private String uri;
