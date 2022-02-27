@@ -97,7 +97,7 @@ public class CadastroCozinhaIT {
     }
 
     @Test
-    public void deveRetornarRespostaEStatus404QuandoConsultarCozinhainexistente() {
+    public void deveRetornarRespostaEStatus404QuandoConsultarCozinhaInexistente() {
         given()
                 .pathParams("cozinhaId", COZINHA_ID_INEXISTENTE)
                 .accept(ContentType.JSON)
