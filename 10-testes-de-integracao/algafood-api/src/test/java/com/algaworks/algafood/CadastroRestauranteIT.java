@@ -41,9 +41,20 @@ public class CadastroRestauranteIT {
     @Autowired
     private CozinhaRepository cozinhaRepository;
 
+
+    private static final String VIOLACAO_DE_REGRA_DE_NEGOCIO_PROBLEM_TYPE = "Violação de regra de negócio";
+
+    private static final String DADOS_INVALIDOS_PROBLEM_TITLE = "Dados inválidos";
+
+    private static final int RESTAURANTE_ID_INEXISTENTE = 100;
+
+
     private int quantidadeRestaurantesCadastrados;
-    private Restaurante restauranteThaiDelivery;
-    private String jsonCorretoRestauranteComidaMineira;
+    private Restaurante burgerTopRestaurante;
+    private String jsonRestauranteCorreto;
+    private String jsonRestauranteSemFrete;
+    private String jsonRestauranteSemCozinha;
+    private String jsonRestauranteComCozinhaInexistente;
     public static final int ID_RESTAURANTE_INEXISTENTE = 100;
 
     @BeforeEach
@@ -52,10 +63,19 @@ public class CadastroRestauranteIT {
         RestAssured.port = port;
         RestAssured.basePath = "/restaurantes";
 
+        jsonRestauranteCorreto = ResourceUtils
+                .getContentFromResource("/json/correto/restaurante-comida-mineira.json");
+        jsonRestauranteSemFrete = ResourceUtils
+                .getContentFromResource("/json/incorreto/restaurante-new-york-barbecue-sem-frete.json");
+
+        jsonRestauranteSemCozinha = ResourceUtils
+                .getContentFromResource("/json/incorreto/restaurante-new-york-barbecue-sem-cozinha.json");
+
+        jsonRestauranteComCozinhaInexistente = ResourceUtils
+                .getContentFromResource("/json/incorreto/restaurante-new-york-barbecue-com-cozinha-inexistente.json");
+
         databaseCleaner.clearTables();
         prepararDados();
-        jsonCorretoRestauranteComidaMineira = ResourceUtils
-                .getContentFromResource("/json/correto/restaurante-comida-mineira.json");
     }
 
     @Test
@@ -69,19 +89,9 @@ public class CadastroRestauranteIT {
     }
 
     @Test
-    public void deveRetornarQuantidadeCorretaDeRestaurantesQuandoConsultarRestaurantes() {
-        given()
-                .accept(ContentType.JSON)
-                .when()
-                .get()
-                .then()
-                .body("", hasSize(quantidadeRestaurantesCadastrados));
-    }
-
-    @Test
     public void deveRetornarStatus201QuandoCadastrarRestaurante() {
         given()
-                .body(jsonCorretoRestauranteComidaMineira)
+                .body(jsonRestauranteCorreto)
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
                 .when()
@@ -91,21 +101,61 @@ public class CadastroRestauranteIT {
     }
 
     @Test
+    public void deveRetornarStatus400QuandoCadastrarRestauranteSemTaxaFrete() {
+        given()
+                .body(jsonRestauranteSemFrete)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .post()
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .body("title", equalTo(DADOS_INVALIDOS_PROBLEM_TITLE));
+    }
+
+    @Test
+    public void deveRetornarStatus400QuandoCadastrarRestauranteSemCozinha() {
+        given()
+                .body(jsonRestauranteSemCozinha)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .post()
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .body("title", equalTo(DADOS_INVALIDOS_PROBLEM_TITLE));
+    }
+
+    @Test
+    public void deveRetornarStatus400QuandoCadastrarRestauranteComCozinhaInexistente() {
+        given()
+                .body(jsonRestauranteComCozinhaInexistente)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .post()
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .body("title", equalTo(VIOLACAO_DE_REGRA_DE_NEGOCIO_PROBLEM_TYPE));
+    }
+
+
+    @Test
     public void deveRetornarRespostaEStatusCorretosQuandoConsultarRestauranteExistente() {
         given()
-                .pathParams("restauranteId", restauranteThaiDelivery.getId())
+                .pathParam("restauranteId", burgerTopRestaurante.getId())
                 .accept(ContentType.JSON)
                 .when()
                 .get("/{restauranteId}")
                 .then()
                 .statusCode(HttpStatus.OK.value())
-                .body("nome", equalTo(restauranteThaiDelivery.getNome()));
+                .body("nome", equalTo(burgerTopRestaurante.getNome()));
     }
 
     @Test
-    public void deveRetornarRespostaEStatus404QuandoConsultarRestauranteInexistente(){
+    public void deveRetornarStatus404QuandoConsultarRestauranteInexistente() {
         given()
-                .pathParams("restauranteId", ID_RESTAURANTE_INEXISTENTE)
+                .pathParam("restauranteId", RESTAURANTE_ID_INEXISTENTE)
                 .accept(ContentType.JSON)
                 .when()
                 .get("/{restauranteId}")
@@ -114,29 +164,25 @@ public class CadastroRestauranteIT {
     }
 
     private void prepararDados() {
-        Cozinha cozinha1 = new Cozinha();
-        cozinha1.setNome("Tailandesa");
-        cozinhaRepository.save(cozinha1);
+        Cozinha cozinhaBrasileira = new Cozinha();
+        cozinhaBrasileira.setNome("Brasileira");
+        cozinhaRepository.save(cozinhaBrasileira);
 
-        Restaurante restaurante1 = new Restaurante();
-        restaurante1.setNome("Thai Gourmet");
-        restaurante1.setTaxaFrete(BigDecimal.valueOf(10.00));
-        restaurante1.setCozinha(new Cozinha());
-        restaurante1.getCozinha().setId(1L);
-        restauranteRepository.save(restaurante1);
+        Cozinha cozinhaAmericana = new Cozinha();
+        cozinhaAmericana.setNome("Americana");
+        cozinhaRepository.save(cozinhaAmericana);
 
-        Cozinha cozinha2 = new Cozinha();
-        cozinha2.setNome("Americana");
-        cozinhaRepository.save(cozinha2);
+        burgerTopRestaurante = new Restaurante();
+        burgerTopRestaurante.setNome("Burger Top");
+        burgerTopRestaurante.setTaxaFrete(new BigDecimal(10));
+        burgerTopRestaurante.setCozinha(cozinhaAmericana);
+        restauranteRepository.save(burgerTopRestaurante);
 
-        restauranteThaiDelivery = new Restaurante();
-        restauranteThaiDelivery.setNome("Thai Delivery");
-        restauranteThaiDelivery.setTaxaFrete(BigDecimal.valueOf(10.00));
-        restauranteThaiDelivery.setCozinha(new Cozinha());
-        restauranteThaiDelivery.getCozinha().setId(2L);
-        restauranteRepository.save(restauranteThaiDelivery);
-
-        quantidadeRestaurantesCadastrados = (int) restauranteRepository.count();
+        Restaurante comidaMineiraRestaurante = new Restaurante();
+        comidaMineiraRestaurante.setNome("Comida Mineira");
+        comidaMineiraRestaurante.setTaxaFrete(new BigDecimal(10));
+        comidaMineiraRestaurante.setCozinha(cozinhaBrasileira);
+        restauranteRepository.save(comidaMineiraRestaurante);
     }
 
 }
