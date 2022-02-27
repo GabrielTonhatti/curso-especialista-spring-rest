@@ -48,7 +48,7 @@ public class CadastroCozinhaIT {
         databaseCleaner.clearTables();
         prepararDados();
         jsonCorretoCozinhaChinesa = ResourceUtils
-                .getContentFromResource("/json/correto/cadastrarCozinha.json");
+                .getContentFromResource("/json/correto/cozinha-chinesa.json");
     }
 
     @Test
