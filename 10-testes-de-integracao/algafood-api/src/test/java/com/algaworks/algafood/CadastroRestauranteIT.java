@@ -20,9 +20,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.math.BigDecimal;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 
 @ExtendWith(SpringExtension.class)
 @TestPropertySource("/application-test.properties")
@@ -40,7 +39,6 @@ public class CadastroRestauranteIT {
 
     @Autowired
     private CozinhaRepository cozinhaRepository;
-
 
     private static final String VIOLACAO_DE_REGRA_DE_NEGOCIO_PROBLEM_TYPE = "Violação de regra de negócio";
 
