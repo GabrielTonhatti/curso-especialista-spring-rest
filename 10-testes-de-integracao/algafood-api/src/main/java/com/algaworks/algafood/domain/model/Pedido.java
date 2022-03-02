@@ -6,7 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -29,11 +29,11 @@ public class Pedido {
     private StatusPedido statusPedido;
 
     @CreationTimestamp
-    private OffsetDateTime dataCriacao;
+    private LocalDateTime dataCriacao;
 
-    private OffsetDateTime dataConfirmacao;
-    private OffsetDateTime dataCancelamento;
-    private OffsetDateTime dataEntrega;
+    private LocalDateTime dataConfirmacao;
+    private LocalDateTime dataCancelamento;
+    private LocalDateTime dataEntrega;
 
     @ManyToOne
     @JoinColumn(nullable = false)

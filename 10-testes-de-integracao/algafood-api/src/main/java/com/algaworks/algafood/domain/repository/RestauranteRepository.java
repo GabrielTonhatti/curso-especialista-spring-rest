@@ -19,7 +19,10 @@ public interface RestauranteRepository extends CustomJpaRepository<Restaurante, 
 
     List<Restaurante> queryByTaxaFreteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal);
 
+    //    @Query("FROM Restaurante WHERE nome LIKE %:nome% AND cozinha.id = :id")
     List<Restaurante> consultarPorNome(String nome, @Param("id") Long cozinha);
+
+//    List<Restaurante> findByNomeContainingAndCozinhaId(String nome, Long cozinha);
 
     Optional<Restaurante> findFirstRestauranteByNomeContaining(String nome);
 
