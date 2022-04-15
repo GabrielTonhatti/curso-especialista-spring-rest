@@ -7,10 +7,9 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-public class RestauranteModel {
+public class CidadeModel {
 
     private Long id;
     private String nome;
-    private BigDecimal taxaFrete;
-    private CozinhaModel cozinha;
+    private EstadoModel estado;
 }
