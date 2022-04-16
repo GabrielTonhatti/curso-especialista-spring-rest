@@ -43,7 +43,8 @@ public class FormaPagamentoController {
     }
 
     @PostMapping
-    public FormaPagamentoModel salvar(@RequestBody @Valid FormaPagamentoInput formaPagamentoInput) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public FormaPagamentoModel adicionar(@RequestBody @Valid FormaPagamentoInput formaPagamentoInput) {
         FormaPagamento formaPagamento = formaPagamentoInputDesassembler.toDomainObject(formaPagamentoInput);
 
         formaPagamento = cadastroFormaPagamento.salvar(formaPagamento);

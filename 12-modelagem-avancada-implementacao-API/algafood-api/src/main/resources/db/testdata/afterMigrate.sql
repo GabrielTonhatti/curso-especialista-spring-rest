@@ -143,3 +143,15 @@ INSERT INTO produto (nome, descricao, preco, ativo, restaurante_id)
 VALUES ('Sanduíche X-Tudo', 'Sandubão com muito queijo, hamburger bovino, bacon, ovo, salada e maionese', 19, 1, 5);
 INSERT INTO produto (nome, descricao, preco, ativo, restaurante_id)
 VALUES ('Espetinho de Cupim', 'Acompanha farinha, mandioca e vinagrete', 8, 1, 6);
+
+INSERT INTO grupo(nome)
+VALUES ('Gerente'),
+       ('Vendedor'),
+       ('Secretária'),
+       ('Cadastrador');
+
+INSERT INTO usuario (id, nome, email, senha, data_cadastro)
+VALUES (1, 'João da Silva', 'joao.ger@algafood.com', '123', UTC_TIMESTAMP),
+       (2, 'Maria Joaquina', 'maria.vnd@algafood.com', '123', UTC_TIMESTAMP),
+       (3, 'José Souza', 'jose.aux@algafood.com', '123', UTC_TIMESTAMP),
+       (4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '123', UTC_TIMESTAMP);
