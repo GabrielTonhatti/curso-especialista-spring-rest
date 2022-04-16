@@ -41,8 +41,7 @@ public class CadastroCidadeService {
         } catch (EmptyResultDataAccessException e) {
             throw new CidadeNaoEncontradoException(cidadeId);
         } catch (DataIntegrityViolationException e) {
-            throw new EntidadeEmUsoException(
-                    String.format(MSG_CIDADE_EM_USO, cidadeId));
+            throw new EntidadeEmUsoException(String.format(MSG_CIDADE_EM_USO, cidadeId));
         }
     }
 

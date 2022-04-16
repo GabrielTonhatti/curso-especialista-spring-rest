@@ -1,6 +1,6 @@
 package com.algaworks.algafood.api.controller;
 
-import com.algaworks.algafood.api.assembler.CidadeInputDesassembler;
+import com.algaworks.algafood.api.assembler.CidadeInputDisassembler;
 import com.algaworks.algafood.api.assembler.CidadeModelAssembler;
 import com.algaworks.algafood.api.model.CidadeModel;
 import com.algaworks.algafood.api.model.input.CidadeInput;
@@ -9,7 +9,6 @@ import com.algaworks.algafood.domain.exception.NegocioException;
 import com.algaworks.algafood.domain.model.Cidade;
 import com.algaworks.algafood.domain.repository.CidadeRepository;
 import com.algaworks.algafood.domain.service.CadastroCidadeService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +30,7 @@ public class CidadeController {
     private CidadeModelAssembler cidadeModelAssembler;
 
     @Autowired
-    private CidadeInputDesassembler cidadeInputDesassembler;
+    private CidadeInputDisassembler cidadeInputDesassembler;
 
     @GetMapping
     public List<CidadeModel> listar() {

@@ -23,24 +23,20 @@ public class Restaurante {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @NotBlank
     @Column(nullable = false)
     private String nome;
 
-//    @NotNull
-//    @PositiveOrZero
     @Column(name = "taxa_frete", nullable = false)
     private BigDecimal taxaFrete;
 
-//    @Valid
-//    @NotNull
     @ManyToOne
     @JoinColumn(name = "cozinha_id", nullable = false)
-//    @ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
     private Cozinha cozinha;
 
     @Embedded
     private Endereco endereco;
+
+    private Boolean ativo = Boolean.TRUE;
 
     @CreationTimestamp
     @Column(nullable = false, columnDefinition = "datetime")
@@ -58,4 +54,11 @@ public class Restaurante {
     @OneToMany(mappedBy = "restaurante")
     private List<Produto> produto = new ArrayList<>();
 
+    public void ativar() {
+        this.setAtivo(true);
+    }
+
+    public void inativar() {
+        this.setAtivo(false);
+    }
 }
