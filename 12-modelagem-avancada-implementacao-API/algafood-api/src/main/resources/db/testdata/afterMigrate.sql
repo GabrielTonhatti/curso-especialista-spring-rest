@@ -83,20 +83,21 @@ VALUES (8, 'Minas Gerais', 1);
 INSERT INTO cidade (id, nome, estado_id)
 VALUES (9, 'Rio de Janeiro', 4);
 
-INSERT INTO restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo, endereco_cidade_id,
+INSERT INTO restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo, aberto,
+                         endereco_cidade_id,
                          endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro)
-VALUES (1, 'Thai Gourmet', 10, 1, UTC_TIMESTAMP, UTC_TIMESTAMP, TRUE, 1, '38400-999', 'Rua João Pinheiro', '1000',
+VALUES (1, 'Thai Gourmet', 10, 1, UTC_TIMESTAMP, UTC_TIMESTAMP, TRUE, TRUE, 1, '38400-999', 'Rua João Pinheiro', '1000',
         'Centro');
-INSERT INTO restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo)
-VALUES (2, 'Thai Delivery', 9.50, 1, UTC_TIMESTAMP, UTC_TIMESTAMP, TRUE);
-INSERT INTO restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo)
-VALUES (3, 'Tuk Tuk Comida Indiana', 15, 2, UTC_TIMESTAMP, UTC_TIMESTAMP, TRUE);
-INSERT INTO restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo)
-VALUES (4, 'Java Steakhouse', 12, 3, UTC_TIMESTAMP, UTC_TIMESTAMP, TRUE);
-INSERT INTO restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo)
-VALUES (5, 'Lanchonete do Tio Sam', 11, 4, UTC_TIMESTAMP, UTC_TIMESTAMP, TRUE);
-INSERT INTO restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo)
-VALUES (6, 'Bar da Maria', 6, 4, UTC_TIMESTAMP, UTC_TIMESTAMP, TRUE);
+INSERT INTO restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo, aberto)
+VALUES (2, 'Thai Delivery', 9.50, 1, UTC_TIMESTAMP, UTC_TIMESTAMP, TRUE, TRUE);
+INSERT INTO restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo, aberto)
+VALUES (3, 'Tuk Tuk Comida Indiana', 15, 2, UTC_TIMESTAMP, UTC_TIMESTAMP, TRUE, TRUE);
+INSERT INTO restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo, aberto)
+VALUES (4, 'Java Steakhouse', 12, 3, UTC_TIMESTAMP, UTC_TIMESTAMP, TRUE, TRUE);
+INSERT INTO restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo, aberto)
+VALUES (5, 'Lanchonete do Tio Sam', 11, 4, UTC_TIMESTAMP, UTC_TIMESTAMP, TRUE, TRUE);
+INSERT INTO restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo, aberto)
+VALUES (6, 'Bar da Maria', 6, 4, UTC_TIMESTAMP, UTC_TIMESTAMP, TRUE, TRUE);
 
 INSERT INTO forma_pagamento(id, descricao)
 VALUES (1, 'Cartão de Crédito');
@@ -154,4 +155,21 @@ INSERT INTO usuario (id, nome, email, senha, data_cadastro)
 VALUES (1, 'João da Silva', 'joao.ger@algafood.com', '123', UTC_TIMESTAMP),
        (2, 'Maria Joaquina', 'maria.vnd@algafood.com', '123', UTC_TIMESTAMP),
        (3, 'José Souza', 'jose.aux@algafood.com', '123', UTC_TIMESTAMP),
-       (4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '123', UTC_TIMESTAMP);
+       (4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '123', UTC_TIMESTAMP),
+       (5, 'Manoel Lima', 'manoel.loja@gmail.com', '123', UTC_TIMESTAMP);
+
+INSERT INTO grupo_permissao (grupo_id, permissao_id)
+VALUES (1, 1),
+       (1, 2),
+       (2, 1),
+       (2, 2),
+       (3, 1);
+
+INSERT INTO usuario_grupo (usuario_id, grupo_id)
+VALUES (1, 1),
+       (1, 2),
+       (2, 2);
+
+INSERT INTO restaurante_usuario_responsavel (restaurante_id, usuario_id)
+VALUES (1, 5),
+       (3, 5);

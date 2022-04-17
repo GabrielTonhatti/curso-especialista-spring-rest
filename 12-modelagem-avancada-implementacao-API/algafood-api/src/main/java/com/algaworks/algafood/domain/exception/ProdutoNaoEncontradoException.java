@@ -6,7 +6,7 @@ public class ProdutoNaoEncontradoException extends EntidadeNaoEncontradaExceptio
         super(mensagem);
     }
 
-    public ProdutoNaoEncontradoException(Long produtoId, Long restauranteId) {
+    public ProdutoNaoEncontradoException(Long restauranteId, Long produtoId) {
         this(String.format("Não existe um cadastro de produto com o código %d para o restaurante de código %d",
                 produtoId, restauranteId));
     }
