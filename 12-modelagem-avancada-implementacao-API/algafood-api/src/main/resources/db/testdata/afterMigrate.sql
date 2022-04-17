@@ -23,7 +23,13 @@ FROM restaurante_forma_pagamento;
 DELETE
 FROM usuario;
 DELETE
+FROM pedido;
+DELETE
+FROM item_pedido;
+DELETE
 FROM usuario_grupo;
+DELETE
+FROM restaurante_usuario_responsavel;
 
 SET foreign_key_checks = 1;
 
@@ -173,3 +179,24 @@ VALUES (1, 1),
 INSERT INTO restaurante_usuario_responsavel (restaurante_id, usuario_id)
 VALUES (1, 5),
        (3, 5);
+
+INSERT INTO pedido (id, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep,
+                    endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
+                    status, data_criacao, subtotal, taxa_frete, valor_total)
+VALUES (1, 1, 1, 1, 1, '38400-000', 'Rua Floriano Peixoto', '500', 'Apto 801', 'Brasil',
+        'CRIADO', UTC_TIMESTAMP, 298.90, 10, 308.90);
+
+INSERT INTO item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+VALUES (1, 1, 1, 1, 78.9, 78.9, null);
+
+INSERT INTO item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+VALUES (2, 1, 2, 2, 110, 220, 'Menos picante, por favor');
+
+INSERT INTO pedido (id, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep,
+                    endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
+                    status, data_criacao, subtotal, taxa_frete, valor_total)
+VALUES (2, 4, 1, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro',
+        'CRIADO', UTC_TIMESTAMP, 79, 0, 79);
+
+INSERT INTO item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+VALUES (3, 2, 6, 1, 79, 79, 'Ao ponto');

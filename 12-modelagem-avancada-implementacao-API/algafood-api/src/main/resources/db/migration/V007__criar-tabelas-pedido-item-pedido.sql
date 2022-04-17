@@ -5,22 +5,22 @@ CREATE TABLE pedido
     taxa_frete           DECIMAL(10, 2) NOT NULL,
     valor_total          DECIMAL(10, 2) NOT NULL,
 
-    restaurante_id        BIGINT         NOT NULL,
+    restaurante_id       BIGINT         NOT NULL,
     usuario_cliente_id   BIGINT         NOT NULL,
     forma_pagamento_id   BIGINT         NOT NULL,
 
-    endereco_cidade_id   BIGINT(20)     NOT NULL,
+    endereco_cidade_id   BIGINT(20) NOT NULL,
     endereco_cep         VARCHAR(9)     NOT NULL,
     endereco_logradouro  VARCHAR(100)   NOT NULL,
     endereco_numero      VARCHAR(20)    NOT NULL,
-    endereco_complemento VARCHAR(60)    NULL,
+    endereco_complemento VARCHAR(60) NULL,
     endereco_bairro      VARCHAR(60)    NOT NULL,
 
     status               VARCHAR(10)    NOT NULL,
-    data_cricao          DATETIME       NOT NULL,
-    data_confirmacao     DATETIME       NULL,
-    data_cancelamento    DATETIME       NULL,
-    data_entrega         DATETIME       NULL,
+    data_criacao         DATETIME       NOT NULL,
+    data_confirmacao     DATETIME NULL,
+    data_cancelamento    DATETIME NULL,
+    data_entrega         DATETIME NULL,
 
     PRIMARY KEY (id),
 
@@ -35,10 +35,10 @@ CREATE TABLE pedido
 CREATE TABLE item_pedido
 (
     id             BIGINT         NOT NULL AUTO_INCREMENT,
-    quantidade     SMALLINT(6)    NOT NULL,
+    quantidade     SMALLINT(6) NOT NULL,
     preco_unitario DECIMAL(10, 2) NOT NULL,
     preco_total    DECIMAL(10, 2) NOT NULL,
-    observacao     VARCHAR(255)   NULL,
+    observacao     VARCHAR(255) NULL,
     pedido_id      BIGINT         NOT NULL,
     produto_id     BIGINT         NOT NULL,
 

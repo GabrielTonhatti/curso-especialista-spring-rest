@@ -1,11 +1,14 @@
 package com.algaworks.algafood.domain.service;
 
+import com.algaworks.algafood.domain.exception.NegocioException;
 import com.algaworks.algafood.domain.exception.RestauranteNaoEncontradoException;
 import com.algaworks.algafood.domain.model.*;
 import com.algaworks.algafood.domain.repository.RestauranteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class CadastroRestauranteService {
@@ -54,6 +57,24 @@ public class CadastroRestauranteService {
     }
 
     @Transactional
+    public void ativar(List<Long> restauranteIds) {
+        try {
+            restauranteIds.forEach(this::ativar);
+        } catch (RestauranteNaoEncontradoException e) {
+            throw new NegocioException(e.getMessage(), e);
+        }
+    }
+
+    @Transactional
+    public void inativar(List<Long> restauranteIds) {
+        try {
+            restauranteIds.forEach(this::inativar);
+        } catch (RestauranteNaoEncontradoException e) {
+            throw new NegocioException(e.getMessage(), e);
+        }
+    }
+
+    @Transactional
     public void abrir(Long restauranteId) {
         Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
 
@@ -66,6 +87,7 @@ public class CadastroRestauranteService {
 
         restauranteAtual.fechar();
     }
+
     @Transactional
     public void associarFormaPagamento(Long restauranteId, Long formaPagamentoId) {
         Restaurante restaurante = buscarOuFalhar(restauranteId);
