@@ -35,7 +35,7 @@ public class CozinhaController {
     private CozinhaInputDisassembler cozinhaInputDesassembler;
 
     @GetMapping
-    public Page<CozinhaModel> listar(@PageableDefault(size = 10) Pageable pageable) {
+    public Page<CozinhaModel> listar(@PageableDefault Pageable pageable) {
         Page<Cozinha> cozinhasPage = cozinhaRepository.findAll(pageable);
         List<CozinhaModel> cozinhasModel = cozinhaModelAssembler.toCollectionModel(cozinhasPage.getContent());
 
