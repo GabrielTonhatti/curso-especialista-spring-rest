@@ -132,7 +132,7 @@ VALUES (1, 1),
        (3, 3);
 
 INSERT INTO produto (nome, descricao, preco, ativo, restaurante_id)
-VALUES ('Porco com molho agridoce', 'Deliciosa carne suína ao molho especial', 78.90, 1, 1);
+VALUES ('Porco com molho agridoce', 'Deliciosa carne suína ao molho especial', 78.90, 0, 1);
 INSERT INTO produto (nome, descricao, preco, ativo, restaurante_id)
 VALUES ('Camarão tailandês', '16 camarões grandes ao molho picante', 110, 1, 1);
 INSERT INTO produto (nome, descricao, preco, ativo, restaurante_id)
