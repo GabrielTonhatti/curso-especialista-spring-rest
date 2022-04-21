@@ -19,12 +19,6 @@ public class PageJsonSerializer extends JsonSerializer<Page<?>> {
         gen.writeNumberField("pageNumber", page.getNumber());
         gen.writeNumberField("totalPages", page.getTotalPages());
         gen.writeNumberField("totalElements", page.getTotalElements());
-//        gen.writeBooleanField("empty", page.getContent().isEmpty());
-        gen.writeBooleanField("first", page.isFirst());
-        gen.writeBooleanField("last", page.isLast());
-        gen.writeBooleanField("empty", page.isEmpty());
-        gen.writeObjectField("sort", page.getSort());
-
         gen.writeEndObject();
     }
 }
