@@ -30,6 +30,8 @@ DELETE
 FROM usuario_grupo;
 DELETE
 FROM restaurante_usuario_responsavel;
+DELETE
+FROM foto_produto;
 
 SET foreign_key_checks = 1;
 
