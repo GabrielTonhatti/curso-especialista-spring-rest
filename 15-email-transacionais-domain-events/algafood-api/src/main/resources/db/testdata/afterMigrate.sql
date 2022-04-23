@@ -168,7 +168,9 @@ VALUES (1, 'João da Silva', 'joao.ger@algafood.com', '123', UTC_TIMESTAMP),
        (2, 'Maria Joaquina', 'maria.vnd@algafood.com', '123', UTC_TIMESTAMP),
        (3, 'José Souza', 'jose.aux@algafood.com', '123', UTC_TIMESTAMP),
        (4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '123', UTC_TIMESTAMP),
-       (5, 'Manoel Lima', 'manoel.loja@gmail.com', '123', UTC_TIMESTAMP);
+       (5, 'Manoel Lima', 'manoel.loja@gmail.com', '123', UTC_TIMESTAMP),
+       (6, 'Débora Mendonça', 'email.teste.aw12+debora@gmail.com', '123', UTC_TIMESTAMP),
+       (7, 'Carlos Lima', 'email.teste.aw12+carlos@gmail.com', '123', UTC_TIMESTAMP);
 
 INSERT INTO grupo_permissao (grupo_id, permissao_id)
 VALUES (1, 1),
@@ -190,7 +192,7 @@ INSERT INTO pedido (id, codigo, restaurante_id, usuario_cliente_id, forma_pagame
                     endereco_cep,
                     endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
                     status, data_criacao, subtotal, taxa_frete, valor_total)
-VALUES (1, '7e75da8b-c101-11ec-a54b-0242ac110007', 1, 1, 1, 1, '38400-000', 'Rua Floriano Peixoto', '500', 'Apto 801',
+VALUES (1, '7e75da8b-c101-11ec-a54b-0242ac110007', 1, 6, 1, 1, '38400-000', 'Rua Floriano Peixoto', '500', 'Apto 801',
         'Brasil',
         'CRIADO', UTC_TIMESTAMP, 298.90, 10, 308.90);
 
@@ -204,7 +206,7 @@ INSERT INTO pedido (id, codigo, restaurante_id, usuario_cliente_id, forma_pagame
                     endereco_cep,
                     endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
                     status, data_criacao, subtotal, taxa_frete, valor_total)
-VALUES (2, '76b94576-c101-11ec-a54b-0242ac110007', 4, 1, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro',
+VALUES (2, '76b94576-c101-11ec-a54b-0242ac110007', 4, 6, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro',
         'CRIADO', UTC_TIMESTAMP, 79, 0, 79);
 
 INSERT INTO item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
@@ -214,7 +216,7 @@ INSERT INTO pedido (id, codigo, restaurante_id, usuario_cliente_id, forma_pagame
                     endereco_cep,
                     endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
                     status, data_criacao, data_confirmacao, data_entrega, subtotal, taxa_frete, valor_total)
-VALUES (3, 'b5741512-8fbc-47fa-9ac1-b530354fc0ff', 1, 1, 1, 1, '38400-222', 'Rua Natal', '200', NULL, 'Brasil',
+VALUES (3, 'b5741512-8fbc-47fa-9ac1-b530354fc0ff', 1,7, 1, 1, '38400-222', 'Rua Natal', '200', NULL, 'Brasil',
         'ENTREGUE', '2019-10-30 21:10:00', '2019-10-30 21:10:45', '2019-10-30 21:55:44', 110, 10, 120);
 
 INSERT INTO item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
@@ -224,7 +226,7 @@ INSERT INTO pedido (id, codigo, restaurante_id, usuario_cliente_id, forma_pagame
                     endereco_cep,
                     endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
                     status, data_criacao, data_confirmacao, data_entrega, subtotal, taxa_frete, valor_total)
-VALUES (4, '5c621c9a-ba61-4454-8631-8aabefe58dc2', 1, 2, 1, 1, '38400-800', 'Rua Fortaleza', '900', 'Apto 504',
+VALUES (4, '5c621c9a-ba61-4454-8631-8aabefe58dc2', 1, 7, 1, 1, '38400-800', 'Rua Fortaleza', '900', 'Apto 504',
         'Centro',
         'ENTREGUE', '2019-11-02 20:34:04', '2019-11-02 20:35:10', '2019-11-02 21:10:32', 174.4, 5, 179.4);
 
