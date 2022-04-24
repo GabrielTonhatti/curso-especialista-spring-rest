@@ -1,19 +1,29 @@
 package com.algaworks.algafood.client;
 
+import com.algaworks.algafood.client.api.ClientApiException;
 import com.algaworks.algafood.client.api.RestauranteClient;
 import org.springframework.web.client.RestTemplate;
 
 public class ListagemRestaurantesMain {
 
     public static void main(String[] args) {
-        RestTemplate restTemplate = new RestTemplate();
+        try {
+            RestTemplate restTemplate = new RestTemplate();
 
-        RestauranteClient restauranteClient = new RestauranteClient(
-                restTemplate,
-                "http://api.algafood.local:8080"
-        );
+            RestauranteClient restauranteClient = new RestauranteClient(
+                    restTemplate,
+                    "http://api.algafood.local:8080"
+            );
 
-        restauranteClient.listar().forEach(System.out::println);
+            restauranteClient.listar().forEach(System.out::println);
+        } catch (ClientApiException e) {
+            if (e.getProblem() != null) {
+                System.out.println(e.getProblem());
+                System.out.println(e.getProblem().getUserMessage());
+            } else {
+                System.out.println("Erro desconhecido");
+            }
+        }
     }
 
 }
