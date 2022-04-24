@@ -1,6 +1,6 @@
 function consultarRestaurantes() {
     $.ajax({
-        url: 'http://api.algafood.local:8080/restaurantes',
+        url: 'http://api.algafood.local:8080/cozinhas',
         type: 'GET',
         header: {
             'X-Teste': 'Abc'

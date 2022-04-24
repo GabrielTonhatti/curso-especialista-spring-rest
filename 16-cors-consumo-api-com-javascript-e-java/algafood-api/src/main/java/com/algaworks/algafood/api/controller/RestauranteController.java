@@ -20,7 +20,6 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@CrossOrigin(maxAge = 10)
 @RequestMapping("/restaurantes")
 public class RestauranteController {
 
