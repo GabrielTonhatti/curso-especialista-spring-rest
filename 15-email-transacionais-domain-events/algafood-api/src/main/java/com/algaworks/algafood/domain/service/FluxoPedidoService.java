@@ -34,6 +34,7 @@ public class FluxoPedidoService {
         Pedido pedido = emissaoPedidoService.buscarOuFalhar(codigoPedido);
         pedido.cancelar();
 
+        pedidoRepository.save(pedido);
     }
 
 }
