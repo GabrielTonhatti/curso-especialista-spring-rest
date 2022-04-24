@@ -11,17 +11,15 @@ import com.algaworks.algafood.domain.exception.NegocioException;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.repository.RestauranteRepository;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
-import com.amazonaws.Response;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/restaurantes")
 public class RestauranteController {
@@ -40,21 +38,15 @@ public class RestauranteController {
 
     @GetMapping
     @JsonView(RestauranteView.Resumo.class)
-    public ResponseEntity<List<RestauranteModel>> listar() {
-        List<RestauranteModel> restaurantesModel = restauranteModelAssembler
-                .toCollectionModel(restauranteRepository.findAll());
-
-        return ResponseEntity
-                .ok()
-                .header(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*")
-                .body(restaurantesModel);
+    public List<RestauranteModel> listar() {
+        return restauranteModelAssembler.toCollectionModel(restauranteRepository.findAll());
     }
 
-//    @GetMapping(params = "projecao=apenas-nome")
-//    @JsonView(RestauranteView.ApenasNome.class)
-//    public List<RestauranteModel> listarApenasNomes() {
-//        return listar();
-//    }
+    @GetMapping(params = "projecao=apenas-nome")
+    @JsonView(RestauranteView.ApenasNome.class)
+    public List<RestauranteModel> listarApenasNomes() {
+        return listar();
+    }
 
     @GetMapping("/{restauranteId}")
     public RestauranteModel buscar(@PathVariable Long restauranteId) {
