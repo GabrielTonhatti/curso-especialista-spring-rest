@@ -1,26 +1,28 @@
-function consultarRestaurantes() {
+function consultar() {
     $.ajax({
-        url: 'http://api.algafood.local:8080/cozinhas',
-        type: 'GET',
-        header: {
-            'X-Teste': 'Abc'
-        },
+        url: "http://api.algafood.local:8080/formas-pagamento",
+        type: "GET",
         success: function (response) {
-            $("#conteudo")
-                .text(JSON.stringify(response));
+            preencherTabela(response);
         }
+    })
+}
+
+
+function preencherTabela(formasPagamento) {
+    $("#tabela tbody tr").remove();
+
+    $.each(formasPagamento, function (i, formaPagamento) {
+        var linha = $("<tr>");
+
+        linha.append(
+            $("<td>").text(formaPagamento.id),
+            $("<td>").text(formaPagamento.descricao)
+        );
+
+        linha.appendTo("#tabela");
     });
 }
 
-function fecharRestaurantes() {
-    $.ajax({
-        url: 'http://api.algafood.local:8080/restaurantes/1/fechamento',
-        type: 'PUT',
-        success: function (response) {
-            alert("Restaurante foi fechado!");
-        }
-    });
-}
 
-$("#botao"
-).click(consultarRestaurantes);
+$("#btn-consultar").click(consultar);
