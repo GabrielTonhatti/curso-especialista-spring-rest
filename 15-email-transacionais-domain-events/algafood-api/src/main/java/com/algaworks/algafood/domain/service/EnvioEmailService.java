@@ -17,7 +17,7 @@ public interface EnvioEmailService {
     class Mensagem {
 
         @Singular
-        private Set<String> destinarios;
+        private Set<String> destinatarios;
 
         @NonNull
         private String assunto;

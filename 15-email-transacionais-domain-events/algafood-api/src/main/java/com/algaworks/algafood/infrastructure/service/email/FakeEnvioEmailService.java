@@ -16,7 +16,7 @@ public class FakeEnvioEmailService extends SmtpEnvioEmailService {
         // da classe pai para "protected", para poder chamar aqui
         String corpo = processarTemplate(mensagem);
 
-        log.info("[FAKE E-MAIL] Para: {}\n{}", mensagem.getDestinarios(), corpo);
+        log.info("[FAKE E-MAIL] Para: {}\n{}", mensagem.getDestinatarios(), corpo);
     }
 
 }
