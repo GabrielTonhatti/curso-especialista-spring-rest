@@ -1,6 +1,6 @@
 function consultar() {
     $.ajax({
-        url: "http://api.algafood.local:8080/formas-pagamento",
+        url: "http://api.algafood.local:8080/formas-pagamento/1",
         type: "GET",
         success: function (response) {
             preencherTabela(response);
