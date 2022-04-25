@@ -92,12 +92,6 @@
             <groupId>com.github.bohnman</groupId>
             <artifactId>squiggly-filter-jackson</artifactId>
             <version>${squiggly.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.google.guava</groupId>
-                    <artifactId>guava</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
@@ -133,7 +127,6 @@
             <artifactId>springfox-boot-starter</artifactId>
             <version>${spring-fox.version}</version>
         </dependency>
-
 
     </dependencies>
 
