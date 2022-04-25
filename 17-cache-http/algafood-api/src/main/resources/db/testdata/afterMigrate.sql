@@ -111,14 +111,14 @@ VALUES (5, 'Lanchonete do Tio Sam', 11, 4, UTC_TIMESTAMP, UTC_TIMESTAMP, TRUE, T
 INSERT INTO restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo, aberto)
 VALUES (6, 'Bar da Maria', 6, 4, UTC_TIMESTAMP, UTC_TIMESTAMP, TRUE, TRUE);
 
-INSERT INTO forma_pagamento(id, descricao)
-VALUES (1, 'Cartão de Crédito');
-INSERT INTO forma_pagamento (id, descricao)
-VALUES (2, 'Cartão de Débito');
-INSERT INTO forma_pagamento (id, descricao)
-VALUES (3, 'Dinheiro');
-INSERT INTO forma_pagamento(id, descricao)
-VALUES (4, 'Pix');
+INSERT INTO forma_pagamento(id, descricao, data_atualizacao)
+VALUES (1, 'Cartão de Crédito', UTC_TIMESTAMP);
+INSERT INTO forma_pagamento (id, descricao, data_atualizacao)
+VALUES (2, 'Cartão de Débito', UTC_TIMESTAMP);
+INSERT INTO forma_pagamento (id, descricao, data_atualizacao)
+VALUES (3, 'Dinheiro', UTC_TIMESTAMP);
+INSERT INTO forma_pagamento(id, descricao, data_atualizacao)
+VALUES (4, 'Pix', UTC_TIMESTAMP);
 
 INSERT INTO permissao (id, nome, descricao)
 VALUES (1, 'CONSULTAR_COZINHAS', 'Permite consultar cozinhas');
@@ -216,7 +216,7 @@ INSERT INTO pedido (id, codigo, restaurante_id, usuario_cliente_id, forma_pagame
                     endereco_cep,
                     endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
                     status, data_criacao, data_confirmacao, data_entrega, subtotal, taxa_frete, valor_total)
-VALUES (3, 'b5741512-8fbc-47fa-9ac1-b530354fc0ff', 1,7, 1, 1, '38400-222', 'Rua Natal', '200', NULL, 'Brasil',
+VALUES (3, 'b5741512-8fbc-47fa-9ac1-b530354fc0ff', 1, 7, 1, 1, '38400-222', 'Rua Natal', '200', NULL, 'Brasil',
         'ENTREGUE', '2019-10-30 21:10:00', '2019-10-30 21:10:45', '2019-10-30 21:55:44', 110, 10, 120);
 
 INSERT INTO item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
