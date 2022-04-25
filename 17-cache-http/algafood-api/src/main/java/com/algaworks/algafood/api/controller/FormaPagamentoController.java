@@ -40,7 +40,11 @@ public class FormaPagamentoController {
 
         return ResponseEntity
                 .ok()
-                .cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))
+//                .cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))
+//                .cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS).cachePrivate()) // Não permite cache compartilhado, apenas no navegador do usuário
+                .cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS).cachePublic()) // Permite cache compartilhado
+//                .cacheControl(CacheControl.noCache()) // Pode fazer cache, porém é obrigatório fazer a validação dos dados no servidor
+//                .cacheControl(CacheControl.noStore()) // Não permite fazer cache da resposta
                 .body(formasPagamentoModel);
     }
 
