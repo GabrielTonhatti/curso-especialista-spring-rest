@@ -19,13 +19,13 @@ public interface CozinhaControllerOpenApi {
     @ApiOperation("Lista as cozinhas com páginação")
     Page<CozinhaModel> listar(Pageable pageable);
 
+    @ApiOperation("Busca uma cozinha por ID")
     @ApiResponses({
             @ApiResponse(responseCode = "400", description = "ID da cozinha inválido",
                     content = @Content(schema = @Schema(implementation = Problem.class))),
             @ApiResponse(responseCode = "404", description = "Cozinha não encontrada",
                     content = @Content(schema = @Schema(implementation = Problem.class))),
     })
-    @ApiOperation("Busca uma cozinha por ID")
     CozinhaModel buscar(@ApiParam(value = "ID de uma cozinha", example = "1") Long cozinhaId);
 
     @ApiOperation("Cadastra uma cozinha")
@@ -41,7 +41,8 @@ public interface CozinhaControllerOpenApi {
                     content = @Content(schema = @Schema(implementation = Problem.class)))
     })
     CozinhaModel atualizar(@ApiParam(value = "ID de uma cozinha", example = "1") Long cozinhaId,
-                           @ApiParam(name = "corpo", value = "Representação de uma nova cozinha") CozinhaInput cozinhaInput);
+                           @ApiParam(name = "corpo", value = "Representação de uma cozinha com os novos dados")
+                           CozinhaInput cozinhaInput);
 
     @ApiOperation("Exclui uma cozinha por ID")
     @ApiResponses({

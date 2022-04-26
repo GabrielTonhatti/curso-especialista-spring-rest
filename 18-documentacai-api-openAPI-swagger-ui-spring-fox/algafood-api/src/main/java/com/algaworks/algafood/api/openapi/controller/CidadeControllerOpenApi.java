@@ -19,13 +19,13 @@ public interface CidadeControllerOpenApi {
     @ApiOperation("Lista as cidades")
     List<CidadeModel> listar();
 
+    @ApiOperation("Busca uma cidade por ID")
     @ApiResponses({
             @ApiResponse(responseCode = "400", description = "ID da cidade inválido",
                     content = @Content(schema = @Schema(implementation = Problem.class))),
             @ApiResponse(responseCode = "404", description = "Cidade não encontrada",
                     content = @Content(schema = @Schema(implementation = Problem.class))),
     })
-    @ApiOperation("Busca uma cidade por ID")
     CidadeModel buscar(@ApiParam(value = "ID de uma cidade", example = "1") Long cidadeId);
 
     @ApiOperation("Cadastra uma cidade")

@@ -19,13 +19,13 @@ public interface GrupoControllerOpenApi {
     @ApiOperation("Lista os grupos")
     List<GrupoModel> listar();
 
+    @ApiOperation("Busca um grupo por ID")
     @ApiResponses({
             @ApiResponse(responseCode = "400", description = "ID do grupo inválido",
                     content = @Content(schema = @Schema(implementation = Problem.class))),
             @ApiResponse(responseCode = "404", description = "Grupo não encontrada",
                     content = @Content(schema = @Schema(implementation = Problem.class))),
     })
-    @ApiOperation("Busca um grupo por ID")
     GrupoModel buscar(@ApiParam(value = "ID de um grupo", example = "1") Long grupoId);
 
     @ApiOperation("Cadastra um grupo")
