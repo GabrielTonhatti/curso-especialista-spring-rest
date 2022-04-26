@@ -52,8 +52,8 @@ public class CidadeController {
     }
 
     @PostMapping
-    @ApiOperation("Cadastra uma cidade")
     @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation("Cadastra uma cidade")
     public CidadeModel salvar(@ApiParam(name = "Corpo", value = "Representação de uma nova cidade")
                               @RequestBody @Valid CidadeInput cidadeInput) {
         try {
@@ -86,8 +86,8 @@ public class CidadeController {
     }
 
     @DeleteMapping("/{cidadeId}")
-    @ApiOperation("Exclui uma cidade por ID")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ApiOperation("Exclui uma cidade por ID")
     public void remover(@ApiParam(value = "ID de uma cidade", example = "1") @PathVariable Long cidadeId) {
         cadastrarCidade.excluir(cidadeId);
     }
