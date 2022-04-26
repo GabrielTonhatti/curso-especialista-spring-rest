@@ -12,6 +12,9 @@ import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.repository.RestauranteRepository;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
 import com.fasterxml.jackson.annotation.JsonView;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -37,12 +40,18 @@ public class RestauranteController {
 
     @GetMapping
     @JsonView(RestauranteView.Resumo.class)
+    @ApiOperation(value = "Lista restaurantes")
+    @ApiImplicitParams({
+            @ApiImplicitParam(value = "Nome da projecao de restaurante", allowableValues = "apenas-nome",
+                    name = "projecao", paramType = "query", type = "string")
+    })
     public List<RestauranteModel> listar() {
         return restauranteModelAssembler.toCollectionModel(restauranteRepository.findAll());
     }
 
-    @GetMapping(params = "projecao=apenas-nome")
     @JsonView(RestauranteView.ApenasNome.class)
+    @GetMapping(params = "projecao=apenas-nome")
+    @ApiOperation(value = "Lista restaurantes", hidden = true)
     public List<RestauranteModel> listarApenasNomes() {
         return listar();
     }
