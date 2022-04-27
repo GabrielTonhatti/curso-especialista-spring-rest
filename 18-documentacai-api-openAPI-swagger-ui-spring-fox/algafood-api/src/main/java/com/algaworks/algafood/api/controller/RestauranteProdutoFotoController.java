@@ -43,17 +43,22 @@ public class RestauranteProdutoFotoController implements RestauranteProdutoFotoC
     @Autowired
     private FotoStorageService fotoStorageService;
 
-    @GetMapping
-    public FotoProdutoModel buscar(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
+    public ResponseEntity<?> buscar(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
         FotoProduto foto = catalogoFotoProduto.buscarOuFalhar(restauranteId, produtoId);
 
-        return fotoProdutoModelAssembler.toModel(foto);
+        return ResponseEntity.ok(fotoProdutoModelAssembler.toModel(foto));
     }
 
-    @GetMapping(produces = MediaType.ALL_VALUE)
+    @Override
+    @GetMapping(produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> servir(@PathVariable Long restauranteId, @PathVariable Long produtoId,
                                     @RequestHeader(name = "accept") String acceptHeader)
             throws HttpMediaTypeNotAcceptableException {
+
+        if (acceptHeader.equals(MediaType.APPLICATION_JSON_VALUE)) {
+            return buscar(restauranteId, produtoId);
+        }
+
         try {
             FotoProduto fotoProduto = catalogoFotoProduto.buscarOuFalhar(restauranteId, produtoId);
             MediaType mediaTypeFoto = MediaType.parseMediaType(fotoProduto.getContentType());
@@ -79,6 +84,7 @@ public class RestauranteProdutoFotoController implements RestauranteProdutoFotoC
         }
     }
 
+    @Override
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public FotoProdutoModel atualizarFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId,
                                           @Valid FotoProdutoInput fotoProdutoInput) throws IOException {
@@ -97,6 +103,7 @@ public class RestauranteProdutoFotoController implements RestauranteProdutoFotoC
         return fotoProdutoModelAssembler.toModel(fotoSalva);
     }
 
+    @Override
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void excluir(@PathVariable Long restauranteId, @PathVariable Long produtoId) {

@@ -25,16 +25,21 @@ public interface RestauranteProdutoFotoControllerOpenApi {
     @ApiOperation(value = "Busca a foto do produto de um restaurante",
             produces = "application/json, application/jpeg, application/png")
     @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(
+                    schema = @Schema(implementation = FotoProdutoModel.class), mediaType = "application/json")),
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "image/png")),
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "image/jpeg")),
             @ApiResponse(responseCode = "400", description = "ID do restaurante ou produto inválido",
                     content = @Content(schema = @Schema(implementation = Problem.class))),
             @ApiResponse(responseCode = "404", description = "Foto de produto não encontrada",
                     content = @Content(schema = @Schema(implementation = Problem.class))),
     })
-    FotoProdutoModel buscar(@ApiParam(value = "ID do restaurante", example = "1", required = true) Long restauranteId,
-                            @ApiParam(value = "ID do produto", example = "1", required = true) Long produtoId);
-
-    @ApiOperation(value = "Busca a foto do produto de um restaurante", hidden = true)
-    ResponseEntity<?> servir(Long restauranteId, Long produtoId, String acceptHeader)
+    ResponseEntity<?> servir( @ApiParam(value = "ID do restaurante", example = "1", required = true)
+                              Long restauranteId,
+                              @ApiParam(value = "ID do produto", example = "1", required = true)
+                              Long produtoId,
+                              @ApiParam(hidden = true)
+                              String acceptHeader)
             throws HttpMediaTypeNotAcceptableException;
 
     @ApiOperation("Atualiza a foto do produto de um restaurante")
