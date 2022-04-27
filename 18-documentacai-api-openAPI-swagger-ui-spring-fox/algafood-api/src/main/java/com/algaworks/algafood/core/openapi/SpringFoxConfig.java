@@ -68,6 +68,7 @@ public class SpringFoxConfig {
                         new Tag("Cidades", "Gerencia as cidades"),
                         new Tag("Estados", "Gerencia os estados"),
                         new Tag("Pedidos", "Gerencia os pedidos"),
+                        new Tag("Produtos", "Gerencia os produtos"),
                         new Tag("Cozinhas", "Gerencia as cozinhas"),
                         new Tag("Restaurantes", "Gerencia os restaurantes"),
                         new Tag("Grupos", "Gerencia os grupos de usuários"),
