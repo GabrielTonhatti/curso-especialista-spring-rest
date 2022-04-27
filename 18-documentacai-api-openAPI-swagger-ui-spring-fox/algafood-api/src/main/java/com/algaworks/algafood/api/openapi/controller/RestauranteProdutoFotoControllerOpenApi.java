@@ -34,13 +34,12 @@ public interface RestauranteProdutoFotoControllerOpenApi {
             @ApiResponse(responseCode = "404", description = "Foto de produto não encontrada",
                     content = @Content(schema = @Schema(implementation = Problem.class))),
     })
-    ResponseEntity<?> servir( @ApiParam(value = "ID do restaurante", example = "1", required = true)
-                              Long restauranteId,
-                              @ApiParam(value = "ID do produto", example = "1", required = true)
-                              Long produtoId,
-                              @ApiParam(hidden = true)
-                              String acceptHeader)
-            throws HttpMediaTypeNotAcceptableException;
+    ResponseEntity<?> servir(@ApiParam(value = "ID do restaurante", example = "1", required = true)
+                             Long restauranteId,
+                             @ApiParam(value = "ID do produto", example = "1", required = true)
+                             Long produtoId,
+                             @ApiParam(hidden = true)
+                             String acceptHeader) throws HttpMediaTypeNotAcceptableException;
 
     @ApiOperation("Atualiza a foto do produto de um restaurante")
     @ApiResponses({
