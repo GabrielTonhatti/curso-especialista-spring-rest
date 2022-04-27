@@ -22,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 import static com.algaworks.algafood.domain.service.FotoStorageService.*;
@@ -43,7 +42,7 @@ public class RestauranteProdutoFotoController implements RestauranteProdutoFotoC
     @Autowired
     private FotoStorageService fotoStorageService;
 
-    public ResponseEntity<?> buscar(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
+    public ResponseEntity<?> recuperarFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
         FotoProduto foto = catalogoFotoProduto.buscarOuFalhar(restauranteId, produtoId);
 
         return ResponseEntity.ok(fotoProdutoModelAssembler.toModel(foto));
@@ -51,12 +50,12 @@ public class RestauranteProdutoFotoController implements RestauranteProdutoFotoC
 
     @Override
     @GetMapping(produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> servir(@PathVariable Long restauranteId, @PathVariable Long produtoId,
+    public ResponseEntity<?> buscar(@PathVariable Long restauranteId, @PathVariable Long produtoId,
                                     @RequestHeader(name = "accept") String acceptHeader)
             throws HttpMediaTypeNotAcceptableException {
 
         if (acceptHeader.equals(MediaType.APPLICATION_JSON_VALUE)) {
-            return buscar(restauranteId, produtoId);
+            return recuperarFoto(restauranteId, produtoId);
         }
 
         try {

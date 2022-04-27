@@ -10,13 +10,9 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
-import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.io.IOException;
 
 @Api(tags = "Produtos")
@@ -34,7 +30,7 @@ public interface RestauranteProdutoFotoControllerOpenApi {
             @ApiResponse(responseCode = "404", description = "Foto de produto não encontrada",
                     content = @Content(schema = @Schema(implementation = Problem.class))),
     })
-    ResponseEntity<?> servir(@ApiParam(value = "ID do restaurante", example = "1", required = true)
+    ResponseEntity<?> buscar(@ApiParam(value = "ID do restaurante", example = "1", required = true)
                              Long restauranteId,
                              @ApiParam(value = "ID do produto", example = "1", required = true)
                              Long produtoId,
