@@ -41,7 +41,7 @@ public class EstatisticasController implements EstatisticasControllerOpenApi {
                                                             String timeOffset) {
         byte[] bytesPdf = vendaReportService.emitirVendasDiarias(filtro, timeOffset);
         var header = new HttpHeaders();
-        // o header "attachment; filename=vendas-diarias.pdf" faz com que o arquivo seja baixado automáticamente
+        // o header "attachment; filename=vendas-diarias.pdf" faz com que o arquivo seja baixado automaticamente
         // sem ter um preview do arquivo antes no nageador
         header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=vendas-diarias.pdf");
 
