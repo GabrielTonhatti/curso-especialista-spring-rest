@@ -1,5 +1,6 @@
 package com.algaworks.algafood.domain.filter;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
