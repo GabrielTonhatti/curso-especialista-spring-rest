@@ -10,14 +10,13 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-
-import java.util.List;
+import org.springframework.hateoas.CollectionModel;
 
 @Api(tags = "Estados")
 public interface EstadoControllerOpenApi {
 
     @ApiOperation("Lista as estdaos")
-    List<EstadoModel> listar();
+    CollectionModel<EstadoModel> listar();
 
     @ApiOperation("Busca um estado por ID")
     @ApiResponses({
