@@ -9,9 +9,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import java.util.List;
+import org.springframework.hateoas.CollectionModel;
 
 @Api(tags = "Restaurantes")
 public interface RestauranteUsuarioResponsavelControllerOpenApi {
@@ -21,7 +19,7 @@ public interface RestauranteUsuarioResponsavelControllerOpenApi {
             @ApiResponse(responseCode = "404", description = "Restaurante não encontrado",
                     content = @Content(schema = @Schema(implementation = Problem.class)))
     })
-    List<UsuarioModel> listar(@ApiParam(value = "ID de um restaurante", example = "1", required = true) Long restauranteId);
+    CollectionModel<UsuarioModel> listar(@ApiParam(value = "ID de um restaurante", example = "1", required = true) Long restauranteId);
 
     @ApiOperation("Associação de restaurante com usuário responsável")
     @ApiResponses({
