@@ -56,7 +56,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
     @Override
     @GetMapping("/{produtoId}")
     public ProdutoModel buscar(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
-        Produto produto = cadastroProduto.buscarOuFalhar(produtoId, restauranteId);
+        Produto produto = cadastroProduto.buscarOuFalhar(restauranteId, produtoId);
 
         return produtoModelAssembler.toModel(produto);
     }
