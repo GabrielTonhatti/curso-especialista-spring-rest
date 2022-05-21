@@ -11,7 +11,7 @@ public enum StatusPedido {
     CANCELADO("Cancelado", CRIADO);
 
     private final String descricao;
-    private List<StatusPedido> statusAnteriores;
+    private final List<StatusPedido> statusAnteriores;
 
     StatusPedido(String descricao, StatusPedido... statusAnteriores) {
         this.descricao = descricao;
@@ -24,6 +24,10 @@ public enum StatusPedido {
 
     public boolean naoPodeAlterarPara(StatusPedido novoStatus) {
         return !novoStatus.statusAnteriores.contains(this);
+    }
+
+    public boolean podeAlterarPara(StatusPedido novoStatus) {
+        return !naoPodeAlterarPara(novoStatus);
     }
 
 }

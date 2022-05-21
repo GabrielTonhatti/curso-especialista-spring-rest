@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.ResponseEntity;
 
 @Api(tags = "Pedidos")
 public interface FluxoPedidoControllerOpenApi {
@@ -18,7 +19,7 @@ public interface FluxoPedidoControllerOpenApi {
             @ApiResponse(responseCode = "404", description = "Pedido não encontrado",
                     content = @Content(schema = @Schema(implementation = Problem.class)))
     })
-    void confirmar(@ApiParam(value = "Código de um pedido", example = "f9981ca4-5a5e-4da3-af04-933861df3e55",
+    ResponseEntity<Void> confirmar(@ApiParam(value = "Código de um pedido", example = "f9981ca4-5a5e-4da3-af04-933861df3e55",
             required = true) String codigoPedido);
 
     @ApiOperation("Registrar entrega de pedido")
@@ -27,7 +28,7 @@ public interface FluxoPedidoControllerOpenApi {
             @ApiResponse(responseCode = "404", description = "Pedido não encontrado",
                     content = @Content(schema = @Schema(implementation = Problem.class)))
     })
-    void entregar(@ApiParam(value = "Código de um pedido", example = "f9981ca4-5a5e-4da3-af04-933861df3e55",
+    ResponseEntity<Void> entregar(@ApiParam(value = "Código de um pedido", example = "f9981ca4-5a5e-4da3-af04-933861df3e55",
             required = true) String codigoPedido);
 
     @ApiOperation("Cancelamento de pedido")
@@ -36,6 +37,6 @@ public interface FluxoPedidoControllerOpenApi {
             @ApiResponse(responseCode = "404", description = "Pedido não encontrado",
                     content = @Content(schema = @Schema(implementation = Problem.class)))
     })
-    void cancelar(@ApiParam(value = "Código de um pedido", example = "f9981ca4-5a5e-4da3-af04-933861df3e55",
+    ResponseEntity<Void> cancelar(@ApiParam(value = "Código de um pedido", example = "f9981ca4-5a5e-4da3-af04-933861df3e55",
             required = true) String codigoPedido);
 }

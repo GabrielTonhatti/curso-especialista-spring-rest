@@ -28,6 +28,24 @@ public class AlgaLinks {
         return Link.of(UriTemplate.of(pedidosUrl, PAGINACAO_VARIABLES.concat(filtroVariables)), "pedidos");
     }
 
+    public Link linkToConfirmacaoPedido(String codigo, String rel) {
+        return linkTo(methodOn(FluxoPedidoController.class)
+                .confirmar(codigo))
+                .withRel(rel);
+    }
+
+    public Link linkToEntregaPedido(String codigo, String rel) {
+        return linkTo(methodOn(FluxoPedidoController.class)
+                .entregar(codigo))
+                .withRel(rel);
+    }
+
+    public Link linkToCancelamentoPedido(String codigo, String rel) {
+        return linkTo(methodOn(FluxoPedidoController.class)
+                .cancelar(codigo))
+                .withRel(rel);
+    }
+
     public Link linkToRestaurante(Long restauranteId, String rel) {
         return linkTo(methodOn(RestauranteController.class)
                 .buscar(restauranteId))
@@ -76,7 +94,7 @@ public class AlgaLinks {
         return linkToGruposUsuario(usuarioId, IanaLinkRelations.SELF.value());
     }
 
-    public Link linkToResponsaveisRestaurante(Long restauranteId,  String rel) {
+    public Link linkToResponsaveisRestaurante(Long restauranteId, String rel) {
         return linkTo(methodOn(RestauranteUsuarioResponsavelController.class)
                 .listar(restauranteId))
                 .withRel(rel);
