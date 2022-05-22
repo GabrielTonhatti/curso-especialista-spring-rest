@@ -14,6 +14,7 @@ import com.algaworks.algafood.domain.repository.RestauranteRepository;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -40,14 +41,14 @@ public class RestauranteController implements RestauranteControllerOpenApi {
     @Override
     @GetMapping
     @JsonView(RestauranteView.Resumo.class)
-    public List<RestauranteModel> listar() {
+    public CollectionModel<RestauranteModel> listar() {
         return restauranteModelAssembler.toCollectionModel(restauranteRepository.findAll());
     }
 
     @Override
     @JsonView(RestauranteView.ApenasNome.class)
     @GetMapping(params = "projecao=apenas-nome")
-    public List<RestauranteModel> listarApenasNomes() {
+    public CollectionModel<RestauranteModel> listarApenasNomes() {
         return listar();
     }
 

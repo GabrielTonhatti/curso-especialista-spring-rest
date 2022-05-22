@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.hateoas.CollectionModel;
 
 import java.util.List;
 
@@ -21,10 +22,10 @@ public interface RestauranteControllerOpenApi {
             @ApiImplicitParam(value = "Nome da projecao de restaurante", allowableValues = "apenas-nome",
                     name = "projecao", paramType = "query", type = "string")
     })
-    List<RestauranteModel> listar();
+    CollectionModel<RestauranteModel> listar();
 
     @ApiOperation(value = "Lista os restaurantes", hidden = true)
-    List<RestauranteModel> listarApenasNomes();
+    CollectionModel<RestauranteModel> listarApenasNomes();
 
     @ApiOperation("Busca um restaurante por ID")
     @ApiResponses({
