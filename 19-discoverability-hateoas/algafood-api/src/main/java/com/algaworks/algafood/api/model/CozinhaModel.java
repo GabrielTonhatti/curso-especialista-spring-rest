@@ -14,10 +14,10 @@ import org.springframework.hateoas.server.core.Relation;
 public class CozinhaModel extends RepresentationModel<CozinhaModel> {
 
     @ApiModelProperty(example = "1")
-    @JsonView(RestauranteView.Resumo.class)
+//    @JsonView(RestauranteView.Resumo.class)
     private Long id;
 
-    @JsonView(RestauranteView.Resumo.class)
+//    @JsonView(RestauranteView.Resumo.class)
     @ApiModelProperty(example = "Brasileira")
     private String nome;
 
