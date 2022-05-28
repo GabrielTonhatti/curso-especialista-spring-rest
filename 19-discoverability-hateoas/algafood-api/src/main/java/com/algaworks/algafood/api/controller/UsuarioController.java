@@ -3,9 +3,9 @@ package com.algaworks.algafood.api.controller;
 import com.algaworks.algafood.api.assembler.UsuarioInputDisassembler;
 import com.algaworks.algafood.api.assembler.UsuarioModelAssembler;
 import com.algaworks.algafood.api.model.UsuarioModel;
+import com.algaworks.algafood.api.model.input.SenhaInput;
 import com.algaworks.algafood.api.model.input.UsuarioComSenhaInput;
 import com.algaworks.algafood.api.model.input.UsuarioInput;
-import com.algaworks.algafood.api.model.input.SenhaInput;
 import com.algaworks.algafood.api.openapi.controller.UsuarioControllerOpenApi;
 import com.algaworks.algafood.domain.model.Usuario;
 import com.algaworks.algafood.domain.repository.UsuarioRepository;
@@ -17,7 +17,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "/usuarios", produces = MediaType.APPLICATION_JSON_VALUE)

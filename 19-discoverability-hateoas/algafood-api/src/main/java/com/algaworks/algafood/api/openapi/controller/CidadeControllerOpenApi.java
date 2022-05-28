@@ -12,8 +12,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.hateoas.CollectionModel;
 
-import java.util.List;
-
 @Api(tags = "Cidades")
 public interface CidadeControllerOpenApi {
 

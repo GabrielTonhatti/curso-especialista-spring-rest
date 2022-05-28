@@ -1,5 +1,6 @@
 package com.algaworks.algafood.api.controller;
 
+import com.algaworks.algafood.api.AlgaLinks;
 import com.algaworks.algafood.api.assembler.ProdutoInputDisassembler;
 import com.algaworks.algafood.api.assembler.ProdutoModelAssembler;
 import com.algaworks.algafood.api.model.ProdutoModel;
@@ -11,6 +12,7 @@ import com.algaworks.algafood.domain.repository.ProdutoRepository;
 import com.algaworks.algafood.domain.service.CadastroProdutoService;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,10 +38,13 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
     @Autowired
     private ProdutoInputDisassembler produtoInputDisassembler;
 
+    @Autowired
+    private AlgaLinks algaLinks;
+
     @Override
     @GetMapping
-    public List<ProdutoModel> listar(@PathVariable Long restauranteId,
-                                     @RequestParam(required = false) boolean incluirInativos) {
+    public CollectionModel<ProdutoModel> listar(@PathVariable Long restauranteId,
+                                                @RequestParam(required = false, defaultValue = "false") Boolean incluirInativos) {
         Restaurante restaurante = cadastroRestaurante.buscarOuFalhar(restauranteId);
         List<Produto> todosProdutos;
 
@@ -47,10 +52,11 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
             todosProdutos = produtoRepository.findTodosByRestaurante(restaurante);
         } else {
             todosProdutos = produtoRepository.findAtivosByRestaurante(restaurante);
-
         }
 
-        return produtoModelAssembler.toCollectionModel(todosProdutos);
+        return produtoModelAssembler.toCollectionModel(todosProdutos)
+                .add(algaLinks.linkToProdutos(restauranteId));
+
     }
 
     @Override
