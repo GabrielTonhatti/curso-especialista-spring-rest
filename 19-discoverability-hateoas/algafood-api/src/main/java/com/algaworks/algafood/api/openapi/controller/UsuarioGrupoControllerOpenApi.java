@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.http.ResponseEntity;
 
 @Api(tags = "Usuários")
 public interface UsuarioGrupoControllerOpenApi {
@@ -27,8 +28,8 @@ public interface UsuarioGrupoControllerOpenApi {
             @ApiResponse(responseCode = "404", description = "Usuário ou grupo não encontrado",
                     content = @Content(schema = @Schema(implementation = Problem.class)))
     })
-    void associar(@ApiParam(value = "ID do usuário", example = "1", required = true) Long usuarioId,
-                  @ApiParam(value = "ID do grupo", example = "1", required = true) Long grupoId);
+    ResponseEntity<Void> associar(@ApiParam(value = "ID do usuário", example = "1", required = true) Long usuarioId,
+                                  @ApiParam(value = "ID do grupo", example = "1", required = true) Long grupoId);
 
     @ApiOperation("Desassociação de usuário com grupo")
     @ApiResponses({
@@ -36,7 +37,7 @@ public interface UsuarioGrupoControllerOpenApi {
             @ApiResponse(responseCode = "404", description = "Usuário ou grupo não encontrado",
                     content = @Content(schema = @Schema(implementation = Problem.class)))
     })
-    void desassociar(@ApiParam(value = "ID do usuário", example = "1", required = true) Long usuarioId,
+    ResponseEntity<Void> desassociar(@ApiParam(value = "ID do usuário", example = "1", required = true) Long usuarioId,
                      @ApiParam(value = "ID do grupo", example = "1", required = true) Long grupoId);
 
 }
