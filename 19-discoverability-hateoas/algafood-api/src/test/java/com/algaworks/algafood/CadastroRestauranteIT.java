@@ -1,8 +1,12 @@
 package com.algaworks.algafood;
 
+import com.algaworks.algafood.domain.model.Cidade;
 import com.algaworks.algafood.domain.model.Cozinha;
+import com.algaworks.algafood.domain.model.Estado;
 import com.algaworks.algafood.domain.model.Restaurante;
+import com.algaworks.algafood.domain.repository.CidadeRepository;
 import com.algaworks.algafood.domain.repository.CozinhaRepository;
+import com.algaworks.algafood.domain.repository.EstadoRepository;
 import com.algaworks.algafood.domain.repository.RestauranteRepository;
 import com.algaworks.algafood.util.DatabaseCleaner;
 import com.algaworks.algafood.util.ResourceUtils;
@@ -39,6 +43,12 @@ public class CadastroRestauranteIT {
 
     @Autowired
     private CozinhaRepository cozinhaRepository;
+
+    @Autowired
+    private EstadoRepository estadoRepository;
+
+    @Autowired
+    private CidadeRepository cidadeRepository;
 
     private static final String VIOLACAO_DE_REGRA_DE_NEGOCIO_PROBLEM_TYPE = "Violação de regra de negócio";
 
@@ -162,6 +172,15 @@ public class CadastroRestauranteIT {
     }
 
     private void prepararDados() {
+        Estado estado = new Estado();
+        estado.setNome("São Paulo");
+        estadoRepository.save(estado);
+
+        Cidade cidade = new Cidade();
+        cidade.setNome("São Paulo");
+        cidade.setEstado(estado);
+        cidadeRepository.save(cidade);
+
         Cozinha cozinhaBrasileira = new Cozinha();
         cozinhaBrasileira.setNome("Brasileira");
         cozinhaRepository.save(cozinhaBrasileira);

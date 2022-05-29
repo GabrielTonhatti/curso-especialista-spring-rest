@@ -68,7 +68,7 @@ public class CadastroCozinhaIT {
                 .when()
                 .get()
                 .then()
-                .body("", hasSize(quantidadeCozinhaCadastradas));
+                .body("_embedded.cozinhas", hasSize(quantidadeCozinhaCadastradas));
     }
 
     @Test

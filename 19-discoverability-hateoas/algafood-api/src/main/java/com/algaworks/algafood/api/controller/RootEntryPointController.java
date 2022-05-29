@@ -25,6 +25,7 @@ public class RootEntryPointController {
                 .add(algaLinks.linkToCozinhas("cozinhas"))
                 .add(algaLinks.linkToUsuarios("usuarios"))
                 .add(algaLinks.linkToPermissoes("permissoes"))
+                .add(algaLinks.linkToEstatisticas("estatisticas"))
                 .add(algaLinks.linkToRestaurantes("restaurantes"))
                 .add(algaLinks.linkToFormasPagamento("formas-pagamento"));
     }
