@@ -3,6 +3,10 @@ package com.algaworks.algafood.core.springfox;
 import com.algaworks.algafood.api.exceptionhandler.Problem;
 import com.algaworks.algafood.api.v1.model.*;
 import com.algaworks.algafood.api.v1.openapi.model.*;
+import com.algaworks.algafood.api.v2.model.CidadeModelV2;
+import com.algaworks.algafood.api.v2.model.CozinhaModelV2;
+import com.algaworks.algafood.api.v2.openapi.model.CidadesModelV2OpenApi;
+import com.algaworks.algafood.api.v2.openapi.model.CozinhasModelV2OpenApi;
 import com.fasterxml.classmate.TypeResolver;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
@@ -45,13 +49,14 @@ import java.util.function.Consumer;
 public class SpringFoxConfig {
 
     @Bean
-    public Docket apiDocket() {
+    public Docket apiDocketV1() {
         var typeResolver = new TypeResolver();
 
         return new Docket(DocumentationType.OAS_30)
+                .groupName("V1")
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.algaworks.algafood.api"))
-                .paths(PathSelectors.any())
+                .paths(PathSelectors.ant("/v1/**"))
                 .build()
                 .useDefaultResponseMessages(false)
                 .globalResponses(HttpMethod.GET, globalGetResponseMessages())
@@ -109,7 +114,7 @@ public class SpringFoxConfig {
                         typeResolver.resolve(CollectionModel.class, UsuarioModel.class),
                         UsuariosModelOpenApi.class
                 ))
-                .apiInfo(apiInfo())
+                .apiInfo(apiInfoV1())
                 .tags(
                         new Tag("Cidades", "Gerencia as cidades"),
                         new Tag("Estados", "Gerencia os estados"),
@@ -121,15 +126,66 @@ public class SpringFoxConfig {
                         new Tag("Estatísticas", "Estatísticas da AlgaFood"),
                         new Tag("Grupos", "Gerencia os grupos de usuários"),
                         new Tag("Restaurantes", "Gerencia os restaurantes"),
-        new Tag("Formas de pagamento", "Gerencia as formas de pagamento")
+                        new Tag("Formas de pagamento", "Gerencia as formas de pagamento")
                 );
     }
 
-    private ApiInfo apiInfo() {
+    @Bean
+    public Docket apiDocketV2() {
+        var typeResolver = new TypeResolver();
+
+        return new Docket(DocumentationType.OAS_30)
+                .groupName("V2")
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.algaworks.algafood.api"))
+                .paths(PathSelectors.ant("/v2/**"))
+                .build()
+                .useDefaultResponseMessages(false)
+                .globalResponses(HttpMethod.GET, globalGetResponseMessages())
+                .globalResponses(HttpMethod.POST, globalPostPutResponseMessages())
+                .globalResponses(HttpMethod.PUT, globalPostPutResponseMessages())
+                .globalResponses(HttpMethod.DELETE, globalDeleteResponseMessages())
+                .additionalModels(typeResolver.resolve(Problem.class))
+                .ignoredParameterTypes(ServletWebRequest.class,
+                        URL.class, URI.class, URLStreamHandler.class, Resource.class,
+                        File.class, InputStream.class)
+                .directModelSubstitute(Pageable.class, PageableModelOpenApi.class)
+                .directModelSubstitute(Links.class, LinksModelOpenApi.class)
+                .alternateTypeRules(AlternateTypeRules.newRule(
+                        typeResolver.resolve(PagedModel.class, CozinhaModelV2.class),
+                        CozinhasModelV2OpenApi.class
+                ))
+                .alternateTypeRules(AlternateTypeRules.newRule(
+                        typeResolver.resolve(CollectionModel.class, CidadeModelV2.class),
+                        CidadesModelV2OpenApi.class
+                ))
+                .apiInfo(apiInfoV2())
+                .tags(
+                        new Tag("Cidades", "Gerencia as cidades"),
+                        new Tag("Cozinhas", "Gerencia as cozinhas")
+                );
+    }
+
+    private ApiInfo apiInfoV1() {
+        return new ApiInfoBuilder()
+                .title("AlgaFood API (Depreciada)")
+                .description("API aberta para clientes e restaurantes.<br>"
+                        + "<strong>Essa versão da API está depreciada e deixará de existir a partir de 01/01/2023. "
+                        + "Use a versão mais atual da API.</strong>")
+                .version("1.0")
+                .contact(new Contact(
+                        "Gabriel Tonhatti Cardoso",
+                        "https://www.linkedin.com/in/gabriel-tonhatti-2480561b9/",
+                        "gabrieltonhatti37@gmail.com"
+                ))
+                .build();
+    }
+
+    private ApiInfo apiInfoV2() {
         return new ApiInfoBuilder()
                 .title("AlgaFood API")
                 .description("API aberta para clientes e restaurantes")
-                .version("1.0")
+                .version("2.0")
                 .contact(new Contact(
                         "Gabriel Tonhatti Cardoso",
                         "https://www.linkedin.com/in/gabriel-tonhatti-2480561b9/",

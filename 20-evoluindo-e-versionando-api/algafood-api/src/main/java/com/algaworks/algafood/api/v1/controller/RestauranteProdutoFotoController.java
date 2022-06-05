@@ -27,7 +27,7 @@ import java.util.List;
 import static com.algaworks.algafood.domain.service.FotoStorageService.*;
 
 @RestController
-@RequestMapping(path = "/restaurantes/{restauranteId}/produtos/{produtoId}/foto", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "v1/restaurantes/{restauranteId}/produtos/{produtoId}/foto", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestauranteProdutoFotoController implements RestauranteProdutoFotoControllerOpenApi {
 
     @Autowired
