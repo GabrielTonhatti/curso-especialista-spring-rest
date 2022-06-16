@@ -55,7 +55,8 @@ algafood:
   email:
     remetente: Algafood <gabrieltonhatti37@gmail.com>
     impl: sandbox
-    sandbox.destinatario: email.teste.aw12@gmail.com
+    sandbox:
+      destinatario: email.teste.aw12@gmail.com
 
 logging:
   loggly:

@@ -1,0 +1,9 @@
+server:
+  port: 8081
+
+algafood:
+  jwt:
+    keystore:
+      path: keystores/algafood.jks
+      password: 123456
+      keypair-alias: algafood
