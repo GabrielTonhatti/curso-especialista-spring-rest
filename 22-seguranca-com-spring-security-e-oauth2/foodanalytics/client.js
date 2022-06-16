@@ -1,6 +1,5 @@
 const config = {
     clientId: "foodanalytics",
-    clientSecret: "food123",
     authorizeUrl: "http://auth.algafood.local:8081/oauth/authorize",
     tokenUrl: "http://auth.algafood.local:8081/oauth/token",
     callbackUrl: "http://www.foodanalytics.local:8082",
@@ -8,6 +7,36 @@ const config = {
 };
 
 let accessToken = "";
+
+function generateCodeVerifier() {
+    let codeVerifier = generateRandomString(128);
+    localStorage.setItem("codeVerifier", codeVerifier);
+
+    return codeVerifier;
+}
+
+function generateRandomString(length) {
+    let text = "";
+    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (let i = 0; i < length; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+
+    return text;
+}
+
+function generateCodeChallenge(codeVerifier) {
+    return base64URL(CryptoJS.SHA256(codeVerifier));
+}
+
+function getCodeVerifier() {
+    return localStorage.getItem("codeVerifier");
+}
+
+function base64URL(string) {
+    return string.toString(CryptoJS.enc.Base64).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
+}
 
 function consultar() {
     alert("Consultando recurso com access token " + accessToken);
@@ -34,22 +63,20 @@ function consultar() {
 function gerarAccessToken(code) {
     alert("Gerando access token com code " + code);
 
-    let clientAuth = btoa(config.clientId + ":" + config.clientSecret);
+    let codeVerifier = getCodeVerifier();
 
     let params = new URLSearchParams();
     params.append("grant_type", "authorization_code");
     params.append("code", code);
     params.append("redirect_uri", config.callbackUrl);
+    params.append("client_id", config.clientId);
+    params.append("code_verifier", codeVerifier);
 
     $.ajax({
         url: config.tokenUrl,
         type: "post",
         data: params.toString(),
         contentType: "application/x-www-form-urlencoded",
-
-        beforeSend: function (request) {
-            request.setRequestHeader("Authorization", "Basic " + clientAuth);
-        },
 
         success: function (response) {
             accessToken = response.access_token;
@@ -64,28 +91,20 @@ function gerarAccessToken(code) {
 }
 
 function login() {
-    // https://auth0.com/docs/protocols/oauth2/oauth-state
-    let state = btoa(Math.random());
-    localStorage.setItem("clientState", state);
+    let codeVerifier = generateCodeVerifier();
+    let codeChallenge = generateCodeChallenge(codeVerifier);
 
-    window.location.href = `${config.authorizeUrl}?response_type=code&client_id=${config.clientId}&state=${state}&redirect_uri=${config.callbackUrl}`;
+    window.location.href = `${config.authorizeUrl}?response_type=code&client_id=${config.clientId}&redirect_uri=${config.callbackUrl}&code_challenge_method=s256&code_challenge=${codeChallenge}`;
 }
 
 $(document).ready(function () {
     let params = new URLSearchParams(window.location.search);
 
     let code = params.get("code");
-    let state = params.get("state");
-    let currentState = localStorage.getItem("clientState");
 
     if (code) {
         // window.history.replaceState(null, null, "/");
-
-        if (currentState == state) {
-            gerarAccessToken(code);
-        } else {
-            alert("State inválido");
-        }
+        gerarAccessToken(code);
     }
 });
 
