@@ -239,7 +239,9 @@ WHERE nome LIKE '%_RESTAURANTES'
 INSERT INTO usuario_grupo (usuario_id, grupo_id)
 VALUES (1, 1),
        (1, 2),
-       (2, 2);
+       (2, 2),
+       (3, 3),
+       (4, 4);
 
 INSERT INTO restaurante_usuario_responsavel (restaurante_id, usuario_id)
 VALUES (1, 5),
