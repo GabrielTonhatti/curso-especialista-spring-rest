@@ -164,13 +164,13 @@ VALUES ('Gerente'),
        ('Cadastrador');
 
 INSERT INTO usuario (id, nome, email, senha, data_cadastro)
-VALUES (1, 'João da Silva', 'joao.ger@algafood.com', '123', UTC_TIMESTAMP),
-       (2, 'Maria Joaquina', 'maria.vnd@algafood.com', '123', UTC_TIMESTAMP),
-       (3, 'José Souza', 'jose.aux@algafood.com', '123', UTC_TIMESTAMP),
-       (4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '123', UTC_TIMESTAMP),
-       (5, 'Manoel Lima', 'manoel.loja@gmail.com', '123', UTC_TIMESTAMP),
-       (6, 'Débora Mendonça', 'email.teste.aw12+debora@gmail.com', '123', UTC_TIMESTAMP),
-       (7, 'Carlos Lima', 'email.teste.aw12+carlos@gmail.com', '123', UTC_TIMESTAMP);
+VALUES (1, 'João da Silva', 'joao.ger@algafood.com', '$2a$12$3UrwUt9SuRRkAvOtLqJKHe9IVXc1Q8fGDruKTrQ..XMPh/fEFfG5m', UTC_TIMESTAMP),
+       (2, 'Maria Joaquina', 'maria.vnd@algafood.com', '$2a$12$3UrwUt9SuRRkAvOtLqJKHe9IVXc1Q8fGDruKTrQ..XMPh/fEFfG5m', UTC_TIMESTAMP),
+       (3, 'José Souza', 'jose.aux@algafood.com', '$2a$12$3UrwUt9SuRRkAvOtLqJKHe9IVXc1Q8fGDruKTrQ..XMPh/fEFfG5m', UTC_TIMESTAMP),
+       (4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '$2a$12$3UrwUt9SuRRkAvOtLqJKHe9IVXc1Q8fGDruKTrQ..XMPh/fEFfG5m', UTC_TIMESTAMP),
+       (5, 'Manoel Lima', 'manoel.loja@gmail.com', '$2a$12$3UrwUt9SuRRkAvOtLqJKHe9IVXc1Q8fGDruKTrQ..XMPh/fEFfG5m', UTC_TIMESTAMP),
+       (6, 'Débora Mendonça', 'email.teste.aw12+debora@gmail.com', '$2a$12$3UrwUt9SuRRkAvOtLqJKHe9IVXc1Q8fGDruKTrQ..XMPh/fEFfG5m', UTC_TIMESTAMP),
+       (7, 'Carlos Lima', 'email.teste.aw12+carlos@gmail.com', '$2a$12$3UrwUt9SuRRkAvOtLqJKHe9IVXc1Q8fGDruKTrQ..XMPh/fEFfG5m', UTC_TIMESTAMP);
 
 INSERT INTO grupo_permissao (grupo_id, permissao_id)
 VALUES (1, 1),

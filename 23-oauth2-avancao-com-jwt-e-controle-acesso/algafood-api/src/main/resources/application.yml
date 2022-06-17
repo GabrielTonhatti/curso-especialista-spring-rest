@@ -40,6 +40,11 @@ spring:
     port: 587
     username: apikey
     password: ${SENDGRID_API_KEY}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          public-key-location: classpath:keys/algafood-pkey.pem
 
 algafood:
   storage:

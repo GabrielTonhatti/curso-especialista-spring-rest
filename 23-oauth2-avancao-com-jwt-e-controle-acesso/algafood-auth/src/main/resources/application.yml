@@ -1,6 +1,19 @@
 server:
   port: 8081
 
+spring:
+  datasource:
+    url: ${DATABASE_URL}?createDatabaseIfNotExist=true&serverTimezone=UTC
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+  jpa:
+    database: MYSQL
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL57Dialect
+
 algafood:
   jwt:
     keystore:
