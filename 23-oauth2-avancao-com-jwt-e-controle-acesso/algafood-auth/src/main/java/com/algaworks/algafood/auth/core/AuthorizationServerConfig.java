@@ -103,7 +103,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         var jwtAccessTokenConverter = new JwtAccessTokenConverter();
-//        jwtAccessTokenConverter.setSigningKey("ADASDHF*-DRADE3ewrwijk432EWIhuLJKSLUJWR43538FH~ADADA");
         var jksResource = new ClassPathResource(jwtKeyStoreProperties.getPath());
         var keyStorePass= jwtKeyStoreProperties.getPassword();
         var keyPairAlias = jwtKeyStoreProperties.getKeypairAlias();
