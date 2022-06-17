@@ -16,6 +16,7 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -41,6 +42,7 @@ public class CozinhaController implements CozinhaControllerOpenApi {
 
     @Override
     @GetMapping
+    @PreAuthorize("isAuthenticated()")
     public PagedModel<CozinhaModel> listar(@PageableDefault Pageable pageable) {
         Page<Cozinha> cozinhasPage = cozinhaRepository.findAll(pageable);
 
