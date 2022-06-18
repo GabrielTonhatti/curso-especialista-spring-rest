@@ -4,6 +4,8 @@ import com.algaworks.algafood.api.v1.assembler.FotoProdutoModelAssembler;
 import com.algaworks.algafood.api.v1.model.FotoProdutoModel;
 import com.algaworks.algafood.api.v1.model.input.FotoProdutoInput;
 import com.algaworks.algafood.api.v1.openapi.controller.RestauranteProdutoFotoControllerOpenApi;
+import com.algaworks.algafood.core.security.CheckSecurity.Restaurante.PodeConsultar;
+import com.algaworks.algafood.core.security.CheckSecurity.Restaurante.PodeEditar;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.model.FotoProduto;
 import com.algaworks.algafood.domain.model.Produto;
@@ -24,7 +26,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
-import static com.algaworks.algafood.domain.service.FotoStorageService.*;
+import static com.algaworks.algafood.domain.service.FotoStorageService.FotoRecuperada;
 
 @RestController
 @RequestMapping(path = "v1/restaurantes/{restauranteId}/produtos/{produtoId}/foto", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -49,6 +51,7 @@ public class RestauranteProdutoFotoController implements RestauranteProdutoFotoC
     }
 
     @Override
+    @PodeConsultar
     @GetMapping(produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> buscar(@PathVariable Long restauranteId, @PathVariable Long produtoId,
                                     @RequestHeader(name = "accept") String acceptHeader)
@@ -84,6 +87,7 @@ public class RestauranteProdutoFotoController implements RestauranteProdutoFotoC
     }
 
     @Override
+    @PodeEditar
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public FotoProdutoModel atualizarFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId,
                                           @Valid FotoProdutoInput fotoProdutoInput,
@@ -104,6 +108,7 @@ public class RestauranteProdutoFotoController implements RestauranteProdutoFotoC
     }
 
     @Override
+    @PodeEditar
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void excluir(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
