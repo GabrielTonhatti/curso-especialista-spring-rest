@@ -1,5 +1,6 @@
 package com.algaworks.algafood.core.security;
 
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.lang.annotation.Retention;
@@ -14,13 +15,13 @@ public @interface CheckSecurity {
 
         @Target(METHOD)
         @Retention(RUNTIME)
-        @PreAuthorize("hasAuthority('SCOPE_READ') AND isAuthenticated()")
+        @PreAuthorize("hasAuthority('SCOPE_READ') AND isAuthenticated()" )
         @interface PodeConsultar {
         }
 
         @Target(METHOD)
         @Retention(RUNTIME)
-        @PreAuthorize("hasAuthority('SCOPE_WRITE') AND hasAuthority('EDITAR_COZINHAS')")
+        @PreAuthorize("hasAuthority('SCOPE_WRITE') AND hasAuthority('EDITAR_COZINHAS')" )
         @interface PodeEditar {
         }
 
@@ -30,13 +31,13 @@ public @interface CheckSecurity {
 
         @Target(METHOD)
         @Retention(RUNTIME)
-        @PreAuthorize("hasAuthority('SCOPE_READ') AND isAuthenticated()")
+        @PreAuthorize("hasAuthority('SCOPE_READ') AND isAuthenticated()" )
         @interface PodeConsultar {
         }
 
         @Target(METHOD)
         @Retention(RUNTIME)
-        @PreAuthorize("hasAuthority('SCOPE_WRITE') AND hasAuthority('EDITAR_RESTAURANTES')")
+        @PreAuthorize("hasAuthority('SCOPE_WRITE') AND hasAuthority('EDITAR_RESTAURANTES')" )
         @interface GerenciarCadastro {
         }
 
@@ -55,10 +56,10 @@ public @interface CheckSecurity {
 
         @Target(METHOD)
         @Retention(RUNTIME)
-        @PreAuthorize("hasAuthority('SCOPE_READ') "
-                + "AND (hasAuthority('CONSULTAR_PEDIDOS') "
-                + "OR @algaSecurity.clienteDoPedido(#codigoPedido) "
-                + "OR @algaSecurity.gerenciaRestauranteDoPedido(#codigoPedido))"
+        @PreAuthorize("hasAuthority('SCOPE_READ') AND isAuthenticated()")
+        @PostAuthorize("hasAuthority('CONSULTAR_PEDIDOS') "
+                + "OR @algaSecurity.getUsuarioId() == returnObject.cliente.id "
+                + "OR @algaSecurity.gerenciaRestaurante(returnObject.restaurante.id)"
         )
         @interface PodeBuscar {
         }
