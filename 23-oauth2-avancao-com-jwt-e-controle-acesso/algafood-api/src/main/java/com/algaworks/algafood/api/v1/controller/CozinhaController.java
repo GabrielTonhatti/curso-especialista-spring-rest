@@ -5,6 +5,8 @@ import com.algaworks.algafood.api.v1.assembler.CozinhaModelAssembler;
 import com.algaworks.algafood.api.v1.model.CozinhaModel;
 import com.algaworks.algafood.api.v1.model.input.CozinhaInput;
 import com.algaworks.algafood.api.v1.openapi.controller.CozinhaControllerOpenApi;
+import com.algaworks.algafood.core.security.CheckSecurity.Cozinha.PodeConsultar;
+import com.algaworks.algafood.core.security.CheckSecurity.Cozinha.PodeEditar;
 import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.repository.CozinhaRepository;
 import com.algaworks.algafood.domain.service.CadastroCozinhaService;
@@ -16,7 +18,6 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -42,7 +43,7 @@ public class CozinhaController implements CozinhaControllerOpenApi {
 
     @Override
     @GetMapping
-    @PreAuthorize("isAuthenticated()")
+    @PodeConsultar
     public PagedModel<CozinhaModel> listar(@PageableDefault Pageable pageable) {
         Page<Cozinha> cozinhasPage = cozinhaRepository.findAll(pageable);
 
@@ -50,8 +51,8 @@ public class CozinhaController implements CozinhaControllerOpenApi {
     }
 
     @Override
+    @PodeConsultar
     @GetMapping("/{cozinhaId}")
-    @PreAuthorize("isAuthenticated()")
     public CozinhaModel buscar(@PathVariable Long cozinhaId) {
         Cozinha cozinha = cadastroCozinha.buscarOuFalhar(cozinhaId);
 
@@ -59,9 +60,9 @@ public class CozinhaController implements CozinhaControllerOpenApi {
     }
 
     @Override
+    @PodeEditar
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAnyAuthority('EDITAR_COZINHAS')")
     public CozinhaModel adicionar(@RequestBody @Valid CozinhaInput cozinhaInput) {
         Cozinha cozinha = cozinhaInputDesassembler.toDomainObject(cozinhaInput);
 
@@ -71,8 +72,8 @@ public class CozinhaController implements CozinhaControllerOpenApi {
     }
 
     @Override
+    @PodeEditar
     @PutMapping("/{cozinhaId}")
-    @PreAuthorize("hasAnyAuthority('EDITAR_COZINHAS')")
     public CozinhaModel atualizar(@PathVariable Long cozinhaId, @Valid @RequestBody CozinhaInput cozinhaInput) {
         Cozinha cozinhaAtual = cadastroCozinha.buscarOuFalhar(cozinhaId);
 
@@ -84,9 +85,9 @@ public class CozinhaController implements CozinhaControllerOpenApi {
     }
 
     @Override
+    @PodeEditar
     @DeleteMapping("/{cozinhaId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasAnyAuthority('EDITAR_COZINHAS')")
     public void remover(@PathVariable Long cozinhaId) {
         cadastroCozinha.excluir(cozinhaId);
     }
