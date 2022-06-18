@@ -44,11 +44,24 @@ public @interface CheckSecurity {
         @Retention(RUNTIME)
         @PreAuthorize("hasAuthority('SCOPE_WRITE') "
                 + "AND (hasAuthority('EDITAR_RESTAURANTES') "
-                +   "OR @algaSecurity.gerenciaRestaurante(#restauranteId))"
+                + "OR @algaSecurity.gerenciaRestaurante(#restauranteId))"
         )
         @interface GerenciarFuncionamento {
         }
 
+    }
+
+    @interface Pedidos {
+
+        @Target(METHOD)
+        @Retention(RUNTIME)
+        @PreAuthorize("hasAuthority('SCOPE_READ') "
+                + "AND (hasAuthority('CONSULTAR_PEDIDOS') "
+                + "OR @algaSecurity.clienteDoPedido(#codigoPedido) "
+                + "OR @algaSecurity.gerenciaRestauranteDoPedido(#codigoPedido))"
+        )
+        @interface PodeBuscar {
+        }
 
     }
 
