@@ -9,8 +9,10 @@ import com.algaworks.algafood.api.v1.model.RestauranteBasicoModel;
 import com.algaworks.algafood.api.v1.model.RestauranteModel;
 import com.algaworks.algafood.api.v1.model.input.RestauranteInput;
 import com.algaworks.algafood.api.v1.openapi.controller.RestauranteControllerOpenApi;
+import com.algaworks.algafood.core.security.CheckSecurity;
+import com.algaworks.algafood.core.security.CheckSecurity.Restaurante.GerenciarFuncionamento;
 import com.algaworks.algafood.core.security.CheckSecurity.Restaurante.PodeConsultar;
-import com.algaworks.algafood.core.security.CheckSecurity.Restaurante.PodeEditar;
+import com.algaworks.algafood.core.security.CheckSecurity.Restaurante.GerenciarCadastro;
 import com.algaworks.algafood.domain.exception.CidadeNaoEncontradoException;
 import com.algaworks.algafood.domain.exception.CozinhaNaoEncontradoException;
 import com.algaworks.algafood.domain.exception.NegocioException;
@@ -26,6 +28,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.TimeZone;
+import java.util.Timer;
 
 @RestController
 @RequestMapping(path = "v1/restaurantes", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -73,7 +77,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
     }
 
     @Override
-    @PodeEditar
+    @GerenciarCadastro
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public RestauranteModel adicionar(@RequestBody @Valid RestauranteInput restauranteInput) {
@@ -86,7 +90,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
     }
 
     @Override
-    @PodeEditar
+    @GerenciarCadastro
     @PutMapping("/{restauranteId}")
     public RestauranteModel atualizar(@PathVariable Long restauranteId,
                                       @RequestBody @Valid RestauranteInput restauranteInput) {
@@ -102,7 +106,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
     }
 
     @Override
-    @PodeEditar
+    @GerenciarCadastro
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{restauranteId}/ativo")
     public ResponseEntity<Void>  ativar(@PathVariable Long restauranteId) {
@@ -112,7 +116,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
     }
 
     @Override
-    @PodeEditar
+    @GerenciarCadastro
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{restauranteId}/ativo")
     public ResponseEntity<Void>  inativar(@PathVariable Long restauranteId) {
@@ -122,7 +126,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
     }
 
     @Override
-    @PodeEditar
+    @GerenciarCadastro
     @PutMapping("/ativacoes")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void ativarMultiplos(@RequestBody List<Long> restauranteIds) {
@@ -130,7 +134,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
     }
 
     @Override
-    @PodeEditar
+    @GerenciarCadastro
     @DeleteMapping("/ativacoes")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void inativarMultiplos(@RequestBody List<Long> restauranteIds) {
@@ -138,7 +142,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
     }
 
     @Override
-    @PodeEditar
+    @GerenciarFuncionamento
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{restauranteId}/abertura")
     public ResponseEntity<Void> abrir(@PathVariable Long restauranteId) {
@@ -148,7 +152,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
     }
 
     @Override
-    @PodeEditar
+    @GerenciarFuncionamento
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{restauranteId}/fechamento")
     public ResponseEntity<Void>  fechar(@PathVariable Long restauranteId) {

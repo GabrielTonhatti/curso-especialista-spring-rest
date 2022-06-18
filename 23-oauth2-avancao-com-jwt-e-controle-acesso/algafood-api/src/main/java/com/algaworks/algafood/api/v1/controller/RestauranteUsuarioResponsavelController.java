@@ -4,9 +4,8 @@ import com.algaworks.algafood.api.v1.AlgaLinks;
 import com.algaworks.algafood.api.v1.assembler.UsuarioModelAssembler;
 import com.algaworks.algafood.api.v1.model.UsuarioModel;
 import com.algaworks.algafood.api.v1.openapi.controller.RestauranteUsuarioResponsavelControllerOpenApi;
-import com.algaworks.algafood.core.security.CheckSecurity;
 import com.algaworks.algafood.core.security.CheckSecurity.Restaurante.PodeConsultar;
-import com.algaworks.algafood.core.security.CheckSecurity.Restaurante.PodeEditar;
+import com.algaworks.algafood.core.security.CheckSecurity.Restaurante.GerenciarCadastro;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,7 @@ public class RestauranteUsuarioResponsavelController implements RestauranteUsuar
     public CollectionModel<UsuarioModel> listar(@PathVariable Long restauranteId) {
         Restaurante restaurante = cadastroRestaurante.buscarOuFalhar(restauranteId);
 
-        CollectionModel<UsuarioModel>  usuariosModel = usuarioModelAssembler
+        CollectionModel<UsuarioModel> usuariosModel = usuarioModelAssembler
                 .toCollectionModel(restaurante.getResponsaveis())
                 .removeLinks()
                 .add(algaLinks.linkToRestauranteResponsaveis(restauranteId))
@@ -45,9 +44,10 @@ public class RestauranteUsuarioResponsavelController implements RestauranteUsuar
                 .getContent()
                 .forEach(usuarioModel -> usuarioModel
                         .add(algaLinks.linkToRestauranteResponsaveisDesassociacao(
-                                restauranteId,
-                                usuarioModel.getId(),
-                                "desassociar")
+                                        restauranteId,
+                                        usuarioModel.getId(),
+                                        "desassociar"
+                                )
                         )
                 );
 
@@ -55,7 +55,7 @@ public class RestauranteUsuarioResponsavelController implements RestauranteUsuar
     }
 
     @Override
-    @PodeEditar
+    @GerenciarCadastro
     @PutMapping("/{usuarioId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> associar(@PathVariable Long restauranteId, @PathVariable Long usuarioId) {
@@ -65,7 +65,7 @@ public class RestauranteUsuarioResponsavelController implements RestauranteUsuar
     }
 
     @Override
-    @PodeEditar
+    @GerenciarCadastro
     @DeleteMapping("/{usuarioId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> desassociar(@PathVariable Long restauranteId, @PathVariable Long usuarioId) {

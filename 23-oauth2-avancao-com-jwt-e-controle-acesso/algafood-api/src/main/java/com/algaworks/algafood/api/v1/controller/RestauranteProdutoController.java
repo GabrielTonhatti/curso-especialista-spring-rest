@@ -6,7 +6,6 @@ import com.algaworks.algafood.api.v1.assembler.ProdutoModelAssembler;
 import com.algaworks.algafood.api.v1.model.ProdutoModel;
 import com.algaworks.algafood.api.v1.model.input.ProdutoInput;
 import com.algaworks.algafood.api.v1.openapi.controller.RestauranteProdutoControllerOpenApi;
-import com.algaworks.algafood.core.security.CheckSecurity;
 import com.algaworks.algafood.domain.model.Produto;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.repository.ProdutoRepository;
@@ -20,7 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-import static com.algaworks.algafood.core.security.CheckSecurity.Restaurante.*;
+import static com.algaworks.algafood.core.security.CheckSecurity.Restaurante.GerenciarFuncionamento;
+import static com.algaworks.algafood.core.security.CheckSecurity.Restaurante.PodeConsultar;
 
 @RestController
 @RequestMapping(path = "v1/restaurantes/{restauranteId}/produtos", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -73,7 +73,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
     }
 
     @Override
-    @PodeEditar
+    @GerenciarFuncionamento
     @PostMapping
     public ProdutoModel adicionar(@PathVariable Long restauranteId, @RequestBody @Valid ProdutoInput produtoInput) {
         Restaurante restaurante = cadastroRestaurante.buscarOuFalhar(restauranteId);
@@ -87,7 +87,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
     }
 
     @Override
-    @PodeEditar
+    @GerenciarFuncionamento
     @PutMapping("/{produtoId}")
     public ProdutoModel atualizar(@PathVariable Long restauranteId, @PathVariable Long produtoId,
                                   @RequestBody @Valid ProdutoInput produtoInput) {
