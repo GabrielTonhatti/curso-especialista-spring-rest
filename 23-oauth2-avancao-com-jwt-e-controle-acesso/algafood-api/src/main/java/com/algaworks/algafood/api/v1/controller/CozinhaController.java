@@ -51,6 +51,7 @@ public class CozinhaController implements CozinhaControllerOpenApi {
 
     @Override
     @GetMapping("/{cozinhaId}")
+    @PreAuthorize("isAuthenticated()")
     public CozinhaModel buscar(@PathVariable Long cozinhaId) {
         Cozinha cozinha = cadastroCozinha.buscarOuFalhar(cozinhaId);
 
@@ -60,6 +61,7 @@ public class CozinhaController implements CozinhaControllerOpenApi {
     @Override
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAnyAuthority('EDITAR_COZINHAS')")
     public CozinhaModel adicionar(@RequestBody @Valid CozinhaInput cozinhaInput) {
         Cozinha cozinha = cozinhaInputDesassembler.toDomainObject(cozinhaInput);
 
@@ -70,6 +72,7 @@ public class CozinhaController implements CozinhaControllerOpenApi {
 
     @Override
     @PutMapping("/{cozinhaId}")
+    @PreAuthorize("hasAnyAuthority('EDITAR_COZINHAS')")
     public CozinhaModel atualizar(@PathVariable Long cozinhaId, @Valid @RequestBody CozinhaInput cozinhaInput) {
         Cozinha cozinhaAtual = cadastroCozinha.buscarOuFalhar(cozinhaId);
 
@@ -83,6 +86,7 @@ public class CozinhaController implements CozinhaControllerOpenApi {
     @Override
     @DeleteMapping("/{cozinhaId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAnyAuthority('EDITAR_COZINHAS')")
     public void remover(@PathVariable Long cozinhaId) {
         cadastroCozinha.excluir(cozinhaId);
     }
