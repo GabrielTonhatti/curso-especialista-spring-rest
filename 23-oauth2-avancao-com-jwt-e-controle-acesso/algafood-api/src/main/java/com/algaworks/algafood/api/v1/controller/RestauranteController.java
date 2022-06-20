@@ -9,10 +9,9 @@ import com.algaworks.algafood.api.v1.model.RestauranteBasicoModel;
 import com.algaworks.algafood.api.v1.model.RestauranteModel;
 import com.algaworks.algafood.api.v1.model.input.RestauranteInput;
 import com.algaworks.algafood.api.v1.openapi.controller.RestauranteControllerOpenApi;
-import com.algaworks.algafood.core.security.CheckSecurity;
+import com.algaworks.algafood.core.security.CheckSecurity.Restaurante.GerenciarCadastro;
 import com.algaworks.algafood.core.security.CheckSecurity.Restaurante.GerenciarFuncionamento;
 import com.algaworks.algafood.core.security.CheckSecurity.Restaurante.PodeConsultar;
-import com.algaworks.algafood.core.security.CheckSecurity.Restaurante.GerenciarCadastro;
 import com.algaworks.algafood.domain.exception.CidadeNaoEncontradoException;
 import com.algaworks.algafood.domain.exception.CozinhaNaoEncontradoException;
 import com.algaworks.algafood.domain.exception.NegocioException;
@@ -28,8 +27,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.TimeZone;
-import java.util.Timer;
 
 @RestController
 @RequestMapping(path = "v1/restaurantes", produces = MediaType.APPLICATION_JSON_VALUE)

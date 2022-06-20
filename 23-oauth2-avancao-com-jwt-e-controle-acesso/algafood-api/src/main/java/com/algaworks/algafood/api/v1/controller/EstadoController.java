@@ -5,6 +5,9 @@ import com.algaworks.algafood.api.v1.assembler.EstadoModelAssembler;
 import com.algaworks.algafood.api.v1.model.EstadoModel;
 import com.algaworks.algafood.api.v1.model.input.EstadoInput;
 import com.algaworks.algafood.api.v1.openapi.controller.EstadoControllerOpenApi;
+import com.algaworks.algafood.core.security.CheckSecurity;
+import com.algaworks.algafood.core.security.CheckSecurity.Estados.PodeConsultar;
+import com.algaworks.algafood.core.security.CheckSecurity.Estados.PodeEditar;
 import com.algaworks.algafood.domain.model.Estado;
 import com.algaworks.algafood.domain.repository.EstadoRepository;
 import com.algaworks.algafood.domain.service.CadastroEstadoService;
@@ -34,10 +37,12 @@ public class EstadoController implements EstadoControllerOpenApi {
 
 
     @GetMapping
+    @PodeConsultar
     public CollectionModel<EstadoModel> listar() {
         return estadoModelAssembler.toCollectionModel(estadoRepository.findAll());
     }
 
+    @PodeConsultar
     @GetMapping("/{estadoId}")
     public EstadoModel buscar(@PathVariable Long estadoId) {
         Estado estado = cadastroEstado.buscarOuFalhar(estadoId);
@@ -45,6 +50,7 @@ public class EstadoController implements EstadoControllerOpenApi {
         return estadoModelAssembler.toModel(estado);
     }
 
+    @PodeEditar
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public EstadoModel salvar(@RequestBody @Valid EstadoInput estadoInput) {
@@ -55,6 +61,7 @@ public class EstadoController implements EstadoControllerOpenApi {
         return estadoModelAssembler.toModel(estado);
     }
 
+    @PodeEditar
     @PutMapping("/{estadoId}")
     public EstadoModel atualizar(@PathVariable Long estadoId, @RequestBody @Valid EstadoInput estadoInput) {
         Estado estadoAtual = cadastroEstado.buscarOuFalhar(estadoId);
@@ -66,6 +73,7 @@ public class EstadoController implements EstadoControllerOpenApi {
         return estadoModelAssembler.toModel(estadoAtual);
     }
 
+    @PodeEditar
     @DeleteMapping("/{estadoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void remover(@PathVariable Long estadoId) {

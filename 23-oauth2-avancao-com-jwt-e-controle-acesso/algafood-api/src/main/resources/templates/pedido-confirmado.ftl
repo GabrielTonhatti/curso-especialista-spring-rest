@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="pedido" type="com.algaworks.algafood.domain.model.Pedido"-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
