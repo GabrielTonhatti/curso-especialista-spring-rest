@@ -66,6 +66,11 @@ algafood:
     impl: sandbox
     sandbox:
       destinatario: email.teste.aw12@gmail.com
+  jwt:
+    keystore:
+      jks-location: classpath:keys/algafood.jks
+      password: 123456
+      keypair-alias: algafood
 
 logging:
   loggly:
