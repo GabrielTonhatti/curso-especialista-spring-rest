@@ -4,7 +4,7 @@ import com.algaworks.algafood.api.v1.AlgaLinks;
 import com.algaworks.algafood.api.v1.assembler.GrupoModelAssembler;
 import com.algaworks.algafood.api.v1.model.GrupoModel;
 import com.algaworks.algafood.api.v1.openapi.controller.UsuarioGrupoControllerOpenApi;
-import com.algaworks.algafood.core.security.CheckSecurity;
+import com.algaworks.algafood.core.security.AlgaSecurity;
 import com.algaworks.algafood.core.security.CheckSecurity.UsuarioGruposPermissoes.PodeConsultar;
 import com.algaworks.algafood.core.security.CheckSecurity.UsuarioGruposPermissoes.PodeEditar;
 import com.algaworks.algafood.domain.model.Usuario;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "v1/usuarios/{usuarioId}/grupos", produces = MediaType.APPLICATION_JSON_VALUE)
-public class UsuarioGrupoController  implements UsuarioGrupoControllerOpenApi {
+public class UsuarioGrupoController implements UsuarioGrupoControllerOpenApi {
 
     @Autowired
     private CadastroUsuarioService cadastroUsuario;
@@ -29,6 +29,9 @@ public class UsuarioGrupoController  implements UsuarioGrupoControllerOpenApi {
     @Autowired
     private AlgaLinks algaLinks;
 
+    @Autowired
+    private AlgaSecurity algaSecurity;
+
     @Override
     @GetMapping
     @PodeConsultar
@@ -37,12 +40,16 @@ public class UsuarioGrupoController  implements UsuarioGrupoControllerOpenApi {
 
         CollectionModel<GrupoModel> gruposModel = grupoModelAssembler
                 .toCollectionModel(usuario.getGrupos())
-                .add(algaLinks.linkToGruposUsuarioAssocicao(usuarioId, "associar"));
+                .removeLinks();
 
-        gruposModel
-                .getContent()
-                .forEach(grupoModel -> grupoModel
-                        .add(algaLinks.linkToGruposUsuarioDesassocicao(usuarioId, grupoModel.getId(), "desassociar")));
+        if (algaSecurity.podeEditarUsuariosGruposPermissoes()) {
+            gruposModel.add(algaLinks.linkToGruposUsuarioAssocicao(usuarioId, "associar"));
+
+            gruposModel
+                    .getContent()
+                    .forEach(grupoModel -> grupoModel
+                            .add(algaLinks.linkToGruposUsuarioDesassocicao(usuarioId, grupoModel.getId(), "desassociar")));
+        }
 
         return gruposModel;
     }

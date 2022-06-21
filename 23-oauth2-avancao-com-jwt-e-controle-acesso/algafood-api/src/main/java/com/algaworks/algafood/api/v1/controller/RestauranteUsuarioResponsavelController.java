@@ -4,8 +4,9 @@ import com.algaworks.algafood.api.v1.AlgaLinks;
 import com.algaworks.algafood.api.v1.assembler.UsuarioModelAssembler;
 import com.algaworks.algafood.api.v1.model.UsuarioModel;
 import com.algaworks.algafood.api.v1.openapi.controller.RestauranteUsuarioResponsavelControllerOpenApi;
+import com.algaworks.algafood.core.security.AlgaSecurity;
 import com.algaworks.algafood.core.security.CheckSecurity.Restaurante.PodeConsultar;
-import com.algaworks.algafood.core.security.CheckSecurity.Restaurante.GerenciarCadastro;
+import com.algaworks.algafood.core.security.CheckSecurity.Restaurante.PodeGerenciarCadastro;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class RestauranteUsuarioResponsavelController implements RestauranteUsuar
     @Autowired
     private AlgaLinks algaLinks;
 
+    @Autowired
+    private AlgaSecurity algaSecurity;
+
     @Override
     @GetMapping
     @PodeConsultar
@@ -36,26 +40,30 @@ public class RestauranteUsuarioResponsavelController implements RestauranteUsuar
 
         CollectionModel<UsuarioModel> usuariosModel = usuarioModelAssembler
                 .toCollectionModel(restaurante.getResponsaveis())
-                .removeLinks()
-                .add(algaLinks.linkToRestauranteResponsaveis(restauranteId))
-                .add(algaLinks.linkToRestauranteResponsaveisAssociacao(restauranteId, "associar"));
+                .removeLinks();
 
-        usuariosModel
-                .getContent()
-                .forEach(usuarioModel -> usuarioModel
-                        .add(algaLinks.linkToRestauranteResponsaveisDesassociacao(
-                                        restauranteId,
-                                        usuarioModel.getId(),
-                                        "desassociar"
-                                )
-                        )
-                );
+        usuariosModel.add(algaLinks.linkToRestauranteResponsaveis(restauranteId));
+
+        if (algaSecurity.podeGerenciarCadastroRestaurantes()) {
+            usuariosModel.add(algaLinks.linkToRestauranteResponsaveisAssociacao(restauranteId, "associar"));
+
+            usuariosModel
+                    .getContent()
+                    .forEach(usuarioModel -> usuarioModel
+                            .add(algaLinks.linkToRestauranteResponsaveisDesassociacao(
+                                            restauranteId,
+                                            usuarioModel.getId(),
+                                            "desassociar"
+                                    )
+                            )
+                    );
+        }
 
         return usuariosModel;
     }
 
     @Override
-    @GerenciarCadastro
+    @PodeGerenciarCadastro
     @PutMapping("/{usuarioId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> associar(@PathVariable Long restauranteId, @PathVariable Long usuarioId) {
@@ -65,7 +73,7 @@ public class RestauranteUsuarioResponsavelController implements RestauranteUsuar
     }
 
     @Override
-    @GerenciarCadastro
+    @PodeGerenciarCadastro
     @DeleteMapping("/{usuarioId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> desassociar(@PathVariable Long restauranteId, @PathVariable Long usuarioId) {

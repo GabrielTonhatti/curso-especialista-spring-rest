@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-import static com.algaworks.algafood.core.security.CheckSecurity.Restaurante.GerenciarFuncionamento;
+import static com.algaworks.algafood.core.security.CheckSecurity.Restaurante.PodeGerenciarFuncionamento;
 import static com.algaworks.algafood.core.security.CheckSecurity.Restaurante.PodeConsultar;
 
 @RestController
@@ -73,7 +73,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
     }
 
     @Override
-    @GerenciarFuncionamento
+    @PodeGerenciarFuncionamento
     @PostMapping
     public ProdutoModel adicionar(@PathVariable Long restauranteId, @RequestBody @Valid ProdutoInput produtoInput) {
         Restaurante restaurante = cadastroRestaurante.buscarOuFalhar(restauranteId);
@@ -87,7 +87,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
     }
 
     @Override
-    @GerenciarFuncionamento
+    @PodeGerenciarFuncionamento
     @PutMapping("/{produtoId}")
     public ProdutoModel atualizar(@PathVariable Long restauranteId, @PathVariable Long produtoId,
                                   @RequestBody @Valid ProdutoInput produtoInput) {
