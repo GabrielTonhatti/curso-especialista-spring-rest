@@ -129,9 +129,9 @@ VALUES (3, 'EDITAR_CIDADES', 'Permite criar ou editar cidades');
 INSERT INTO permissao (id, nome, descricao)
 VALUES (4, 'EDITAR_ESTADOS', 'Permite criar ou editar estados');
 INSERT INTO permissao (id, nome, descricao)
-VALUES (5, 'CONSULTAR_USUARIOS', 'Permite consultar usuários');
+VALUES (5, 'CONSULTAR_USUARIOS_GRUPOS_PERMISSOES', 'Permite consultar usuários, grupos e permissões');
 INSERT INTO permissao (id, nome, descricao)
-VALUES (6, 'EDITAR_USUARIOS', 'Permite criar ou editar usuários');
+VALUES (6, 'EDITAR_USUARIOS_GRUPOS_PERMISSOES', 'Permite criar ou editar usuários, grupos e permissões');
 INSERT INTO permissao (id, nome, descricao)
 VALUES (7, 'EDITAR_RESTAURANTES', 'Permite criar, editar ou gerenciar restaurantes');
 INSERT INTO permissao (id, nome, descricao)
