@@ -1,6 +1,5 @@
 package com.algaworks.algafood.domain.model;
 
-import com.algaworks.algafood.domain.model.Cidade;
 import lombok.Data;
 
 import javax.persistence.*;
