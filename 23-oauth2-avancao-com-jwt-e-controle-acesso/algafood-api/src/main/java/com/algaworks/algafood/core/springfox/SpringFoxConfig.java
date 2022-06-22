@@ -22,11 +22,9 @@ import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration
 import springfox.documentation.builders.*;
 import springfox.documentation.oas.annotations.EnableOpenApi;
 import springfox.documentation.schema.AlternateTypeRules;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.service.Response;
-import springfox.documentation.service.Tag;
+import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.json.JacksonModuleRegistrar;
 import springfox.documentation.spring.web.plugins.Docket;
 
@@ -36,6 +34,7 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLStreamHandler;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -111,6 +110,8 @@ public class SpringFoxConfig {
                         UsuariosModelOpenApi.class
                 ))
                 .apiInfo(apiInfoV1())
+                .securityContexts(Collections.singletonList(securityContext()))
+                .securitySchemes(List.of(authenticationScheme()))
                 .tags(
                         new Tag("Cidades", "Gerencia as cidades"),
                         new Tag("Estados", "Gerencia os estados"),
@@ -126,12 +127,28 @@ public class SpringFoxConfig {
                 );
     }
 
+    private SecurityContext securityContext() {
+        return SecurityContext
+                .builder()
+                .securityReferences(securityReference())
+                .build();
+    }
+
+    private List<SecurityReference> securityReference() {
+        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return List.of(new SecurityReference("Authorization", authorizationScopes));
+    }
+
+    private HttpAuthenticationScheme authenticationScheme() {
+        return HttpAuthenticationScheme.JWT_BEARER_BUILDER.name("Authorization").build();
+    }
+
     private ApiInfo apiInfoV1() {
         return new ApiInfoBuilder()
-                .title("AlgaFood API (Depreciada)")
-                .description("API aberta para clientes e restaurantes.<br>"
-                        + "<strong>Essa versão da API está depreciada e deixará de existir a partir de 01/01/2023. "
-                        + "Use a versão mais atual da API.</strong>")
+                .title("AlgaFood API")
+                .description("API aberta para clientes e restaurantes.")
                 .version("1.0")
                 .contact(new Contact(
                         "Gabriel Tonhatti Cardoso",

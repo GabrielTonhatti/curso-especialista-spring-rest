@@ -1,7 +1,8 @@
 const config = {
     clientId: "foodanalytics",
-    authorizeUrl: "http://api.algafood.local:8080/oauth/authorize",
-    tokenUrl: "http://api.algafood.local:8080/oauth/token",
+    clientSecret: "food123",
+    authorizeUrl: "http://auth.algafood.local:8080/oauth/authorize",
+    tokenUrl: "http://localhost:8080/oauth/token",
     callbackUrl: "http://www.foodanalytics.local:8082",
     cozinhasUrl: "http://api.algafood.local:8080/v1/cozinhas"
 };
@@ -65,18 +66,24 @@ function gerarAccessToken(code) {
 
     let codeVerifier = getCodeVerifier();
 
+    let clientAuth = btoa(config.clientId + ":" + config.clientSecret);
+
     let params = new URLSearchParams();
     params.append("grant_type", "authorization_code");
     params.append("code", code);
     params.append("redirect_uri", config.callbackUrl);
-    params.append("client_id", config.clientId);
     params.append("code_verifier", codeVerifier);
+    params.append("client_id", config.clientId);
 
     $.ajax({
         url: config.tokenUrl,
         type: "post",
         data: params.toString(),
         contentType: "application/x-www-form-urlencoded",
+
+        beforeSend: function (request) {
+            request.setRequestHeader("Authorization", "Basic " + clientAuth);
+        },
 
         success: function (response) {
             accessToken = response.access_token;

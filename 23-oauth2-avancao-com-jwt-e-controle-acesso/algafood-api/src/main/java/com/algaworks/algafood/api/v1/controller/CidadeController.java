@@ -6,7 +6,6 @@ import com.algaworks.algafood.api.v1.assembler.CidadeModelAssembler;
 import com.algaworks.algafood.api.v1.model.CidadeModel;
 import com.algaworks.algafood.api.v1.model.input.CidadeInput;
 import com.algaworks.algafood.api.v1.openapi.controller.CidadeControllerOpenApi;
-import com.algaworks.algafood.core.security.CheckSecurity;
 import com.algaworks.algafood.core.security.CheckSecurity.Cidades.PodeConsultar;
 import com.algaworks.algafood.core.security.CheckSecurity.Cidades.PodeEditar;
 import com.algaworks.algafood.domain.exception.EstadoNaoEncontradoException;
@@ -39,7 +38,6 @@ public class CidadeController implements CidadeControllerOpenApi {
     private CidadeInputDisassembler cidadeInputDesassembler;
 
     @Override
-    @Deprecated
     @GetMapping
     @PodeConsultar
     public CollectionModel<CidadeModel> listar() {

@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="pedido" type="com.algaworks.algafood.domain.model.Pedido"-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,10 +7,10 @@
 <body style="font: 14px Arial, Helvetica, sans-serif">
     <h1 style="color: red; font-size: 26px">Pedido confirmado!</h1>
 
-    <p>${pedido.cliente.nome}, seu pedido foi confirmado pelo restaurante e já
+    <p style="color:#000;">${pedido.cliente.nome}, seu pedido foi confirmado pelo restaurante e já
         está sendo preparado.</p>
 
-    <h2 style="font-size: 20px">${pedido.restaurante.nome}</h2>
+    <h2 style="font-size: 20px; color:#000">${pedido.restaurante.nome}</h2>
 
     <table width="100%" border="0" cellspacing="0" cellpadding="0"
            style="max-width: 400px; color: #6F6F6F">
@@ -29,7 +30,7 @@
         </tr>
     </table>
 
-    <h2 style="font-size: 20px">Forma de pagamento</h2>
+    <h2 style="font-size: 20px; color:#000">Forma de pagamento</h2>
     <p style="color: #6F6F6F">${pedido.formaPagamento.descricao}</p>
 </body>
 </html>
