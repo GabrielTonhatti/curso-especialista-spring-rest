@@ -11,7 +11,7 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.MySQL57Dialect
   datasource:
-    url: jdbc:mysql://localhost:3306/algafood?createDatabaseIfNotExist=true&serverTimezone=UTC
+    url: jdbc:mysql://${DB_HOST:localhost:3306}/algafood?createDatabaseIfNotExist=true&serverTimezone=UTC
     username: root
     password:
   flyway:
