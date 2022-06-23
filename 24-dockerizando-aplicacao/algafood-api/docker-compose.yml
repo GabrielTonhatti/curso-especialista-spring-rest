@@ -1,0 +1,39 @@
+version: "3.9"
+
+networks:
+  algafood-network:
+    driver: bridge
+    name: algafood-network
+
+services:
+  algafood-mysql:
+    image: mysql:8.0
+    container_name: algafood-mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "3306:3306"
+    networks:
+      - algafood-network
+
+  algafood-api:
+    image: gabrieltonhatti/algafood-api
+#    container_name: algafood-api
+    command: [ "/wait-for-it.sh", "algafood-mysql:3306", "-t", "30", "--", "java", "-jar", "api.jar" ]
+    environment:
+      DB_HOST: algafood-mysql
+      SENDGRID_API_KEY: ${SENDGRID_API_KEY}
+      S3_BUCKET: ${S3_BUCKET}
+      S3_REGIAO: ${S3_REGIAO}
+      S3_DIRETORIO_FOTOS: ${S3_DIRETORIO_FOTOS}
+      S3_ID_CHAVE_ACESSO: ${S3_ID_CHAVE_ACESSO}
+      S3_ID_CHAVE_ACESSO_SECRETA: ${S3_ID_CHAVE_ACESSO_SECRETA}
+      LOGGLY_TOKEN: ${LOGGLY_TOKEN}
+#    ports:
+#      - "8080:8080"
+    networks:
+      - algafood-network
+    depends_on:
+      - algafood-mysql
+    deploy:
+      replicas: 2

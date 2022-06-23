@@ -1,5 +1,23 @@
 SET foreign_key_checks = 0;
 
+LOCK TABLES
+    cidade WRITE,
+    cozinha WRITE,
+    estado WRITE,
+    forma_pagamento WRITE,
+    grupo WRITE,
+    grupo_permissao WRITE,
+    permissao WRITE ,
+    produto WRITE,
+    restaurante WRITE , restaurante_forma_pagamento WRITE,
+    restaurante_usuario_responsavel WRITE,
+    usuario WRITE,
+    usuario_grupo WRITE,
+    pedido WRITE,
+    item_pedido WRITE,
+    foto_produto WRITE,
+    oauth_client_details WRITE;
+
 DELETE
 FROM cidade;
 DELETE
@@ -302,3 +320,5 @@ INSERT INTO oauth_client_details (client_id, resource_ids, client_secret, scope,
                                   autoapprove)
 VALUES ('faturamento', NULL, '$2y$12$fHixriC7yXX/i1/CmpnGH.RFyK/l5YapLCFOEbIktONjE8ZDykSnu', 'READ,WRITE',
         'client_credentials', NULL, 'CONSULTAR_PEDIDOS,GERAR_RELATORIOS', NULL, NULL, NULL);
+
+UNLOCK TABLES;
