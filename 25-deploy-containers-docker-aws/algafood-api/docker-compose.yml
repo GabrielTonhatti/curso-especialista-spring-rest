@@ -21,17 +21,28 @@ services:
     #    container_name: algafood-api
     command: [ "/wait-for-it.sh", "algafood-mysql:3306", "-t", "30", "--", "java", "-jar", "api.jar" ]
     environment:
-      DB_HOST: algafood-mysql
+      SPRING_PROFILES_ACTIVE: development
+      DATABASE_HOST: algafood-mysql
+      DATABASE_USER: root
       DATABASE_PASSWORD: ''
+      REDIS_USER: ''
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ''
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+      EMAIL_REMETENTE: ${EMAIL_REMETENTE}
       SPRING_SESSION_STORE_TYPE: redis
       SPRING_REDIS_HOST: algafood-redis
-      SENDGRID_API_KEY: ${SENDGRID_API_KEY}
       S3_BUCKET: ${S3_BUCKET}
       S3_REGIAO: ${S3_REGIAO}
       S3_DIRETORIO_FOTOS: ${S3_DIRETORIO_FOTOS}
       S3_ID_CHAVE_ACESSO: ${S3_ID_CHAVE_ACESSO}
       S3_ID_CHAVE_ACESSO_SECRETA: ${S3_ID_CHAVE_ACESSO_SECRETA}
       LOGGLY_TOKEN: ${LOGGLY_TOKEN}
+      JKS_LOCATION: ${JKS_LOCATION}
+      JKS_PASSWORD: ${JKS_PASSWORD}
+      JKS_KEYPAIR_ALIAS: ${JKS_KEYPAIR_ALIAS}
     networks:
       - algafood-network
     depends_on:

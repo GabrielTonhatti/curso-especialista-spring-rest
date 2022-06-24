@@ -5,17 +5,12 @@ server:
 spring:
   jpa:
     database: MYSQL
-    show-sql: true
     properties:
       hibernate:
-        format_sql: true
         dialect: org.hibernate.dialect.MySQL57Dialect
   datasource:
-    url: jdbc:mysql://${DB_HOST:localhost:3307}/algafood?createDatabaseIfNotExist=true&serverTimezone=UTC
-    username: root
-    password: ${DATABASE_PASSWORD}
+    url: jdbc:mysql://${DATABASE_HOST:localhost:3307}/algafood?createDatabaseIfNotExist=true&serverTimezone=UTC
   flyway:
-    locations: classpath:db/migration,classpath:db/testdata
     enabled: true
     baseline-on-migrate: true
     out-of-order: true
@@ -27,56 +22,16 @@ spring:
       fail-on-ignored-properties: true
   mvc:
     throw-exception-if-no-handler-found: true
-    pathmatch.matching-strategy: ANT_PATH_MATCHER
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
   web:
-    resources.add-mappings: false
+    resources:
+      add-mappings: false
   freemarker:
     settings:
       locale: pt_BR
-  mail:
-    properties:
-      auth: true
-      starttls:
-        enable: true
-        required: true
-      connectiontimeout: 5000
-      timeout: 3000
-      writetimeout: 5000
-    host: smtp.sendgrid.net
-    username: apikey
-    password: ${SENDGRID_API_KEY}
-    port: 587
   security:
     oauth2:
       resourceserver:
         jwt:
           jwk-set-uri: http://localhost:8080/.well-known/jwks.json
-
-algafood:
-  storage:
-    tipo: s3
-    local:
-      diretorio-fotos: /home/gabriel/Desktop/catalogo
-    s3:
-      bucket: ${S3_BUCKET}
-      regiao: ${S3_REGIAO}
-      id-chave-acesso: ${S3_ID_CHAVE_ACESSO}
-      diretorio-fotos: ${S3_DIRETORIO_FOTOS}
-      chave-acesso-secreta: ${S3_ID_CHAVE_ACESSO_SECRETA}
-  email:
-    remetente: Algafood <gabrieltonhatti37@gmail.com>
-    impl: sandbox
-    sandbox:
-      destinatario: email.teste.aw12@gmail.com
-  jwt:
-    keystore:
-      jks-location: base64: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
-      password: 123456
-      keypair-alias: algafood
-
-logging:
-  loggly:
-    token: ${LOGGLY_TOKEN}
-#  level:
-#    org:
-#      springframework: DEBUG
