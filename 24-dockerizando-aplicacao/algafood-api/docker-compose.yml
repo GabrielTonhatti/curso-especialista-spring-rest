@@ -18,7 +18,7 @@ services:
 
   algafood-api:
     image: gabrieltonhatti/algafood-api
-#    container_name: algafood-api
+    #    container_name: algafood-api
     command: [ "/wait-for-it.sh", "algafood-mysql:3306", "-t", "30", "--", "java", "-jar", "api.jar" ]
     environment:
       DB_HOST: algafood-mysql
@@ -29,11 +29,26 @@ services:
       S3_ID_CHAVE_ACESSO: ${S3_ID_CHAVE_ACESSO}
       S3_ID_CHAVE_ACESSO_SECRETA: ${S3_ID_CHAVE_ACESSO_SECRETA}
       LOGGLY_TOKEN: ${LOGGLY_TOKEN}
-#    ports:
-#      - "8080:8080"
+    #    ports:
+    #      - "8080:8080"
     networks:
       - algafood-network
     depends_on:
       - algafood-mysql
     deploy:
       replicas: 2
+
+  algafood-proxy:
+    build: ./nginx
+    image: algafood-proxy
+    ports:
+      - "80:80"
+    networks:
+      - algafood-network
+    depends_on:
+      - algafood-api
+
+  algafood-redis:
+    image: redis:6.2.1-alpine
+    networks:
+      - algafood-network
