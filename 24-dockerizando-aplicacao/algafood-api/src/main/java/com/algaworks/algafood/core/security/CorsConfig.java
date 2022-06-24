@@ -18,11 +18,8 @@ public class CorsConfig {
     @Bean
     public FilterRegistrationBean<CorsFilter> corsFilterRegistrationBean() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.setAllowedOrigins(Arrays.asList(
-                "http://api.algafood.local:8080",
-                "http://www.foodanalytics.local:8082"
-        ));
+        config.setAllowCredentials(false); // precisa ser false, se usar * no origins
+        config.setAllowedOrigins(Collections.singletonList("*"));
         config.setAllowedMethods(Collections.singletonList("*"));
         config.setAllowedHeaders(Collections.singletonList("*"));
 
