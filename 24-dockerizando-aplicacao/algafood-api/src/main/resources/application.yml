@@ -11,14 +11,16 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.MySQL57Dialect
   datasource:
-    url: jdbc:mysql://${DB_HOST:localhost:3306}/algafood?createDatabaseIfNotExist=true&serverTimezone=UTC
+    url: jdbc:mysql://${DB_HOST:localhost:3307}/algafood?createDatabaseIfNotExist=true&serverTimezone=UTC
     username: root
-    password:
+    password: ${DATABASE_PASSWORD}
   flyway:
     locations: classpath:db/migration,classpath:db/testdata
     enabled: true
     baseline-on-migrate: true
     out-of-order: true
+  session:
+    store-type: none
   jackson:
     deserialization:
       fail-on-unknown-properties: true

@@ -22,6 +22,9 @@ services:
     command: [ "/wait-for-it.sh", "algafood-mysql:3306", "-t", "30", "--", "java", "-jar", "api.jar" ]
     environment:
       DB_HOST: algafood-mysql
+      DATABASE_PASSWORD: ''
+      SPRING_SESSION_STORE_TYPE: redis
+      SPRING_REDIS_HOST: algafood-redis
       SENDGRID_API_KEY: ${SENDGRID_API_KEY}
       S3_BUCKET: ${S3_BUCKET}
       S3_REGIAO: ${S3_REGIAO}
@@ -29,8 +32,6 @@ services:
       S3_ID_CHAVE_ACESSO: ${S3_ID_CHAVE_ACESSO}
       S3_ID_CHAVE_ACESSO_SECRETA: ${S3_ID_CHAVE_ACESSO_SECRETA}
       LOGGLY_TOKEN: ${LOGGLY_TOKEN}
-    #    ports:
-    #      - "8080:8080"
     networks:
       - algafood-network
     depends_on:
@@ -41,6 +42,7 @@ services:
   algafood-proxy:
     build: ./nginx
     image: algafood-proxy
+    container_name: algafood-proxy
     ports:
       - "80:80"
     networks:
@@ -50,5 +52,6 @@ services:
 
   algafood-redis:
     image: redis:6.2.1-alpine
+    container_name: algafood-redis
     networks:
       - algafood-network
