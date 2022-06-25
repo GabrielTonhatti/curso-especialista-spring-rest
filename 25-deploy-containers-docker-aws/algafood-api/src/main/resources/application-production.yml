@@ -3,8 +3,9 @@ spring:
     username: ${DATABASE_USER}
     password: ${DATABASE_PASSWORD}
   redis:
-    host: ${REDIS_USER}
+    host: ${REDIS_HOST}
     port: ${REDIS_PORT}
+    username: ${REDIS_USER}
     password: ${REDIS_PASSWORD}
   session:
     store-type: redis
@@ -39,8 +40,8 @@ algafood:
       diretorio-fotos: ${S3_DIRETORIO_FOTOS}
       chave-acesso-secreta: ${S3_ID_CHAVE_ACESSO_SECRETA}
   email:
-    remetente: ${EMAIL_REMETENTE}
     impl: smtp
+    remetente: ${EMAIL_REMETENTE}
   jwt:
     keystore:
       jks-location: ${JKS_LOCATION}

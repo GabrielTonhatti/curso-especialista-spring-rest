@@ -27,7 +27,7 @@ spring:
 
 algafood:
   storage:
-    tipo: local
+    tipo: s3
     local:
       diretorio-fotos: /home/gabriel/Desktop/catalogo
     s3:
