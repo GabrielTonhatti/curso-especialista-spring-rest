@@ -1,6 +1,7 @@
 server:
   compression:
     enabled: true
+  forward-headers-strategy: framework
 
 spring:
   jpa:
