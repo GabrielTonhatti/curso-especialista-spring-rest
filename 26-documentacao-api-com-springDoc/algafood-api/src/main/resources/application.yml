@@ -1,0 +1,38 @@
+server:
+  compression:
+    enabled: true
+  forward-headers-strategy: framework
+
+spring:
+  jpa:
+    database: MYSQL
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL57Dialect
+  datasource:
+    url: jdbc:mysql://${DATABASE_HOST:localhost:3307}/algafood?createDatabaseIfNotExist=true&serverTimezone=UTC
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    out-of-order: true
+  session:
+    store-type: none
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+      fail-on-ignored-properties: true
+  mvc:
+    throw-exception-if-no-handler-found: true
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  web:
+    resources:
+      add-mappings: false
+  freemarker:
+    settings:
+      locale: pt_BR
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8080/.well-known/jwks.json

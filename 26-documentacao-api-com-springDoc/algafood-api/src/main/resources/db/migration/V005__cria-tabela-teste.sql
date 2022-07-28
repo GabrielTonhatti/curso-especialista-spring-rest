@@ -1,0 +1,7 @@
+CREATE TABLE teste
+(
+    id BIGINT NOT NULL,
+
+    PRIMARY KEY (id)
+) ENGINE = InnoDB
+  CHARSET = UTF8;
