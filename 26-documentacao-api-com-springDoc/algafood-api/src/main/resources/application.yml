@@ -36,7 +36,3 @@ spring:
       resourceserver:
         jwt:
           jwk-set-uri: http://localhost:8080/.well-known/jwks.json
-
-springdoc:
-  packages-to-scan: com.algaworks.algafood.api
-  paths-to-match: /v1/**
