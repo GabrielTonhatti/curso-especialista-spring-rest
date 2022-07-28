@@ -4,8 +4,10 @@ import com.algaworks.algafood.api.v1.model.UsuarioModel;
 import com.algaworks.algafood.api.v1.model.input.SenhaInput;
 import com.algaworks.algafood.api.v1.model.input.UsuarioComSenhaInput;
 import com.algaworks.algafood.api.v1.model.input.UsuarioInput;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.hateoas.CollectionModel;
 
+@SecurityRequirement(name = "security_auth")
 public interface UsuarioControllerOpenApi {
 
     CollectionModel<UsuarioModel> listar();

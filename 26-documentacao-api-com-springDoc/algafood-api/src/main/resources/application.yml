@@ -36,3 +36,15 @@ spring:
       resourceserver:
         jwt:
           jwk-set-uri: http://localhost:8080/.well-known/jwks.json
+
+springdoc:
+  packages-to-scan: com.algaworks.algafood.api
+  paths-to-match: /v1/**
+  swagger-ui:
+    oauth:
+      client-id: algafood-web
+      client-secret: web123
+      use-pkce-with-authorization-code-grant: true
+  oAuthFlow:
+    authorizationUrl: http://localhost:8080/oauth/authorize
+    tokenUrl: http://localhost:8080/oauth/token
