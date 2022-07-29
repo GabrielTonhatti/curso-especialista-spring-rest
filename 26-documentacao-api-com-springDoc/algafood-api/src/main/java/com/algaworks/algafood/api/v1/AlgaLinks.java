@@ -308,7 +308,7 @@ public class AlgaLinks {
 
     public Link linkToFotoProduto(Long restauranteId, Long produtoId, String rel) {
         return linkTo(methodOn(RestauranteProdutoFotoController.class)
-                .recuperarFoto(restauranteId, produtoId))
+                .buscar(restauranteId, produtoId))
                 .withRel(rel);
     }
 

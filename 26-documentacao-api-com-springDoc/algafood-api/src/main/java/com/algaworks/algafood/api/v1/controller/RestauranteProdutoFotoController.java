@@ -5,13 +5,16 @@ import com.algaworks.algafood.api.v1.model.FotoProdutoModel;
 import com.algaworks.algafood.api.v1.model.input.FotoProdutoInput;
 import com.algaworks.algafood.api.v1.openapi.controller.RestauranteProdutoFotoControllerOpenApi;
 import com.algaworks.algafood.core.security.CheckSecurity.Restaurante.PodeGerenciarFuncionamento;
-import com.algaworks.algafood.core.security.CheckSecurity.Restaurante.PodeConsultar;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.model.FotoProduto;
 import com.algaworks.algafood.domain.model.Produto;
 import com.algaworks.algafood.domain.service.CadastroProdutoService;
 import com.algaworks.algafood.domain.service.CatalogoFotoProdutoService;
 import com.algaworks.algafood.domain.service.FotoStorageService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -26,6 +29,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
+import static com.algaworks.algafood.core.security.CheckSecurity.Restaurante.PodeConsultar;
 import static com.algaworks.algafood.domain.service.FotoStorageService.FotoRecuperada;
 
 @RestController
@@ -44,23 +48,22 @@ public class RestauranteProdutoFotoController implements RestauranteProdutoFotoC
     @Autowired
     private FotoStorageService fotoStorageService;
 
-    public ResponseEntity<?> recuperarFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
+    @Override
+    @GetMapping
+    @PodeConsultar
+    public FotoProdutoModel buscar(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
         FotoProduto foto = catalogoFotoProduto.buscarOuFalhar(restauranteId, produtoId);
 
-        return ResponseEntity.ok(fotoProdutoModelAssembler.toModel(foto));
+        return fotoProdutoModelAssembler.toModel(foto);
     }
 
+    // As fotos dos produtos ficarão públicas (não precisa de autorização para acessá-las)
     @Override
-    @PodeConsultar
-    @GetMapping(produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> buscar(@PathVariable Long restauranteId, @PathVariable Long produtoId,
-                                    @RequestHeader(name = "accept") String acceptHeader)
-            throws HttpMediaTypeNotAcceptableException {
-
-        if (acceptHeader.equals(MediaType.APPLICATION_JSON_VALUE)) {
-            return recuperarFoto(restauranteId, produtoId);
-        }
-
+    @GetMapping(produces =  MediaType.ALL_VALUE)
+    public ResponseEntity<?> servir(
+            @PathVariable Long restauranteId, @PathVariable Long produtoId,
+            @RequestHeader(name = "accept") String acceptHeader
+    ) throws HttpMediaTypeNotAcceptableException {
         try {
             FotoProduto fotoProduto = catalogoFotoProduto.buscarOuFalhar(restauranteId, produtoId);
             MediaType mediaTypeFoto = MediaType.parseMediaType(fotoProduto.getContentType());
