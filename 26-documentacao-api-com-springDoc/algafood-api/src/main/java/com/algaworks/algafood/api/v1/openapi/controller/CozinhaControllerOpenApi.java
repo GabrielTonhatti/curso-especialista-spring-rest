@@ -35,29 +35,29 @@ public interface CozinhaControllerOpenApi {
                     content = @Content(schema = @Schema(ref = "Problema"))
             ),
     })
-    CozinhaModel buscar(@Parameter(description = "ID de uma cozinha", example = "1", required = true)Long cozinhaId);
+    CozinhaModel buscar(@Parameter(description = "ID de uma cozinha", example = "1", required = true) Long cozinhaId);
 
-    @Operation(summary = "Cadastra uma cozinha", responses = {@ApiResponse(responseCode = "201", description = "Cozinha cadastrado")})
+    @Operation(summary = "Cadastra uma cozinha", responses = {@ApiResponse(responseCode = "201", description = "Cozinha cadastrada")})
     CozinhaModel adicionar(@RequestBody(description = "Representação de uma nova cozinha", required = true) CozinhaInput cozinhaInput);
 
     @Operation(summary = "Atualiza uma cozinha por ID", responses = {
-            @ApiResponse(responseCode = "200", description = "Cozinha atualizado"),
+            @ApiResponse(responseCode = "200", description = "Cozinha atualizada"),
             @ApiResponse(responseCode = "404",
                     description = "Cozinha não encontrada",
                     content = @Content(schema = @Schema(ref = "Problema"))
             ),
     })
-    CozinhaModel atualizar(@Parameter(description = "ID de uma cozinha", example = "1", required = true)Long cozinhaId,
+    CozinhaModel atualizar(@Parameter(description = "ID de uma cozinha", example = "1", required = true) Long cozinhaId,
                            @RequestBody(description = "Representação de uma cozinha com dados atualizados", required = true)
                            CozinhaInput cozinhaInput);
 
     @Operation(summary = "Exclui uma cozinha por ID", responses = {
-            @ApiResponse(responseCode = "204", description = "Cozinha excluído"),
+            @ApiResponse(responseCode = "204", description = "Cozinha excluída"),
             @ApiResponse(responseCode = "404",
                     description = "Cozinha não encontrada",
                     content = @Content(schema = @Schema(ref = "Problema"))
             ),
     })
-    ResponseEntity<Void> remover(@Parameter(description = "ID de uma cozinha", example = "1", required = true)Long cozinhaId);
+    ResponseEntity<Void> remover(@Parameter(description = "ID de uma cozinha", example = "1", required = true) Long cozinhaId);
 
 }
