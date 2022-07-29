@@ -57,6 +57,7 @@ public class SpringDocConfig {
                 .externalDocs(externalDocs())
                 .tags(List.of(
                         new Tag().name("Cidades").description("Gerencia as cidades"),
+                        new Tag().name("Cozinhas").description("Gerencia as cozinhas"),
                         new Tag().name("Grupos").description("Gerencia os grupos")
                 ))
                 .components(new Components()
