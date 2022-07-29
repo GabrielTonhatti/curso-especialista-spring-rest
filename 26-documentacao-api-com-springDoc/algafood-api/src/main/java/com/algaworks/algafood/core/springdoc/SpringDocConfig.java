@@ -12,6 +12,8 @@ import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.media.Content;
+import io.swagger.v3.oas.models.media.MediaType;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
@@ -24,6 +26,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Configuration
 @SecurityScheme(
@@ -40,6 +44,12 @@ import java.util.Map;
 )
 public class SpringDocConfig {
 
+    private static final String badRequestResponse = "BadRequestResponse";
+    private static final String notFoundResponse = "NotFoundResponse";
+    private static final String notAcceptableResponse = "NotAcceptableResponse";
+    private static final String internalServerErrorResponse = "InternalServerErrorResponse";
+
+
     @Bean
     public OpenAPI openAPI() {
         return new OpenAPI()
@@ -48,9 +58,10 @@ public class SpringDocConfig {
                 .tags(List.of(
                         new Tag().name("Cidades").description("Gerencia as cidades")
                 ))
-                .components(new Components().schemas(
-                        gerarSchemas()
-                ));
+                .components(new Components()
+                        .schemas(gerarSchemas())
+                        .responses(gerarResponses())
+                );
     }
 
     @Bean
@@ -65,23 +76,19 @@ public class SpringDocConfig {
 
                             switch (httpMethod) {
                                 case GET:
-                                    responses.addApiResponse("404", new ApiResponse().description("Recurso não encontrado"));
-                                    responses.addApiResponse("406", new ApiResponse()
-                                            .description("Recurso não aceita representação que poderia ser aceita pelo consumidor"));
-                                    responses.addApiResponse("500", new ApiResponse().description("Erro interno no servidor"));
+                                    responses.addApiResponse("406", new ApiResponse().$ref(notAcceptableResponse));
+                                    responses.addApiResponse("500", new ApiResponse().$ref(internalServerErrorResponse));
                                     break;
                                 case POST:
-                                    responses.addApiResponse("400", new ApiResponse().description("Requisição inválida"));
-                                    responses.addApiResponse("500", new ApiResponse().description("Erro interno no servidor"));
+                                    responses.addApiResponse("400", new ApiResponse().$ref(badRequestResponse));
+                                    responses.addApiResponse("500", new ApiResponse().$ref(internalServerErrorResponse));
                                     break;
                                 case PUT:
-                                    responses.addApiResponse("404", new ApiResponse().description("Recurso não encontrado"));
-                                    responses.addApiResponse("400", new ApiResponse().description("Requisição inválida"));
-                                    responses.addApiResponse("500", new ApiResponse().description("Erro interno no servidor"));
+                                    responses.addApiResponse("400", new ApiResponse().$ref(badRequestResponse));
+                                    responses.addApiResponse("500", new ApiResponse().$ref(internalServerErrorResponse));
                                     break;
                                 case DELETE:
-                                    responses.addApiResponse("404", new ApiResponse().description("Recurso não encontrado"));
-                                    responses.addApiResponse("500", new ApiResponse().description("Erro interno no servidor"));
+                                    responses.addApiResponse("500", new ApiResponse().$ref(internalServerErrorResponse));
                                     break;
                                 default:
                                     break;
@@ -116,6 +123,37 @@ public class SpringDocConfig {
         Arrays.asList(problemSchema, problemObjectSchema).forEach(schemaMap::putAll);
 
         return schemaMap;
+    }
+
+    private Map<String, ApiResponse> gerarResponses() {
+        final Map<String, ApiResponse> apiResponseMap = new HashMap<>();
+
+        Content content = new Content()
+                .addMediaType(APPLICATION_JSON_VALUE,
+                        new MediaType().schema(new Schema<Problem>().$ref("Problema"))
+                );
+
+        apiResponseMap.put(badRequestResponse, new ApiResponse()
+                .description("Requisição inválida")
+                .content(content)
+        );
+
+        apiResponseMap.put(notFoundResponse, new ApiResponse()
+                .description("Recurso não encontrado")
+                .content(content)
+        );
+
+        apiResponseMap.put(notAcceptableResponse,new ApiResponse()
+                .description("Recurso não aceita representação que poderia ser aceita pelo consumidor")
+                .content(content)
+        );
+
+        apiResponseMap.put(internalServerErrorResponse, new ApiResponse()
+                .description("Erro interno no servidor")
+                .content(content)
+        );
+
+        return apiResponseMap;
     }
 
 }
