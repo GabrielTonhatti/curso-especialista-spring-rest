@@ -21,11 +21,9 @@ public interface EstadoControllerOpenApi {
 
     @Operation(summary = "Busca um estado por ID", responses = {
             @ApiResponse(responseCode = "200"),
-            @ApiResponse(responseCode = "400",
-                    description = "ID do estado inválido", content = @Content(schema = @Schema(ref = "Problema"))
+            @ApiResponse(responseCode = "400", description = "ID do estado inválido", content = @Content(schema = @Schema(ref = "Problema"))
             ),
-            @ApiResponse(responseCode = "404",
-                    description = "Estado não encontrado", content = @Content(schema = @Schema(ref = "Problema"))
+            @ApiResponse(responseCode = "404", description = "Estado não encontrado", content = @Content(schema = @Schema(ref = "Problema"))
             ),
     })
     EstadoModel buscar(@Parameter(description = "ID de um estado", example = "1", required = true) Long estadoId);
