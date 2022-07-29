@@ -20,7 +20,7 @@ public interface CidadeControllerOpenApi {
     @Operation(summary = "Lista as cidades")
     CollectionModel<CidadeModel> listar();
 
-    @Operation(summary = "Busca uma cidade por Id", responses = {
+    @Operation(summary = "Busca uma cidade por ID", responses = {
             @ApiResponse(responseCode = "200"),
             @ApiResponse(responseCode = "400",
                     description = "ID da cidade inválido",

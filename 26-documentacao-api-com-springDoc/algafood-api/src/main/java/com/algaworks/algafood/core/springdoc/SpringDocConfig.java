@@ -56,7 +56,8 @@ public class SpringDocConfig {
                 .info(info())
                 .externalDocs(externalDocs())
                 .tags(List.of(
-                        new Tag().name("Cidades").description("Gerencia as cidades")
+                        new Tag().name("Cidades").description("Gerencia as cidades"),
+                        new Tag().name("Grupos").description("Gerencia os grupos")
                 ))
                 .components(new Components()
                         .schemas(gerarSchemas())
@@ -80,9 +81,6 @@ public class SpringDocConfig {
                                     responses.addApiResponse("500", new ApiResponse().$ref(internalServerErrorResponse));
                                     break;
                                 case POST:
-                                    responses.addApiResponse("400", new ApiResponse().$ref(badRequestResponse));
-                                    responses.addApiResponse("500", new ApiResponse().$ref(internalServerErrorResponse));
-                                    break;
                                 case PUT:
                                     responses.addApiResponse("400", new ApiResponse().$ref(badRequestResponse));
                                     responses.addApiResponse("500", new ApiResponse().$ref(internalServerErrorResponse));
@@ -143,7 +141,7 @@ public class SpringDocConfig {
                 .content(content)
         );
 
-        apiResponseMap.put(notAcceptableResponse,new ApiResponse()
+        apiResponseMap.put(notAcceptableResponse, new ApiResponse()
                 .description("Recurso não aceita representação que poderia ser aceita pelo consumidor")
                 .content(content)
         );
