@@ -42,6 +42,8 @@ algafood:
   email:
     impl: smtp
     remetente: ${EMAIL_REMETENTE}
+  auth:
+    provider-url: http://localhost:8080
   jwt:
     keystore:
       jks-location: ${JKS_LOCATION}
