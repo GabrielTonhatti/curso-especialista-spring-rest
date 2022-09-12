@@ -25,6 +25,13 @@ spring:
     username: ${SMTP_USER}
     password: ${SMTP_PASSWORD}
     port: 587
+  security:
+    oauth2:
+      resourceserver:
+        opaquetoken:
+          introspection-uri: http://localhost:8080/oauth2/introspect
+          client-id: algafood-backend
+          client-secret: backend123
 
 logging:
   loggly:
