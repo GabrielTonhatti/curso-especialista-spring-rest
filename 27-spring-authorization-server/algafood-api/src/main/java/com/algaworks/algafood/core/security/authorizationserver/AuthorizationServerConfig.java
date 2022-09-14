@@ -77,6 +77,7 @@ public class AuthorizationServerConfig {
                 .clientSecret(passwordEncoder.encode("web123"))
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+                .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .scope("READ")
                 .scope("WRITE")
                 .tokenSettings(
@@ -84,6 +85,8 @@ public class AuthorizationServerConfig {
                                 .builder()
                                 .accessTokenFormat(OAuth2TokenFormat.SELF_CONTAINED)
                                 .accessTokenTimeToLive(Duration.ofMinutes(15))
+                                .reuseRefreshTokens(false)
+                                .refreshTokenTimeToLive(Duration.ofDays(1))
                                 .build()
                 )
                 .redirectUri("http://http://127.0.0.1:8080/authorized")
