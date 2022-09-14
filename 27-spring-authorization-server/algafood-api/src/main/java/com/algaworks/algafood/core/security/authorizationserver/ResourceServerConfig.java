@@ -38,7 +38,7 @@ public class ResourceServerConfig {
                 .jwtAuthenticationConverter(jwtAuthenticationConverter());
 
         return http
-                .formLogin(Customizer.withDefaults())
+                .formLogin(customizer -> customizer.loginPage("/login"))
                 .build();
     }
 
