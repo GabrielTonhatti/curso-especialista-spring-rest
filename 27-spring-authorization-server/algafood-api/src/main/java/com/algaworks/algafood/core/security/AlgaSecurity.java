@@ -35,7 +35,9 @@ public class AlgaSecurity {
 
     public Long getUsuarioId() {
         Jwt jwt = (Jwt) getAuthentication().getPrincipal();
-        return jwt.getClaim("usuario_id");
+        String id = jwt.getClaim("id");
+
+        return Long.parseLong(id);
     }
 
     public boolean gerenciaRestaurante(Long restauranteId) {
