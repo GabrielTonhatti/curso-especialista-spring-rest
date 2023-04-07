@@ -1,0 +1,57 @@
+spring:
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  datasource:
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+  flyway:
+    locations: classpath:db/migration,classpath:db/testdata
+  session:
+    store-type: none
+  mail:
+    properties:
+      auth: true
+      starttls:
+        enable: true
+        required: true
+      connectiontimeout: 5000
+      timeout: 3000
+      writetimeout: 5000
+    host: ${SMTP_HOST}
+    username: ${SMTP_USER}
+    password: ${SMTP_PASSWORD}
+    port: 587
+  security:
+    oauth2:
+      resourceserver:
+        opaquetoken:
+          introspection-uri: http://localhost:8080/oauth2/introspect
+          client-id: algafood-backend
+          client-secret: backend123
+
+algafood:
+  storage:
+    tipo: s3
+    local:
+      diretorio-fotos: /home/gabriel/Desktop/catalogo
+    s3:
+      bucket: ${S3_BUCKET}
+      regiao: ${S3_REGIAO}
+      id-chave-acesso: ${S3_ID_CHAVE_ACESSO}
+      diretorio-fotos: ${S3_DIRETORIO_FOTOS}
+      chave-acesso-secreta: ${S3_ID_CHAVE_ACESSO_SECRETA}
+  email:
+    remetente: ${EMAIL_REMETENTE}
+    impl: sandbox
+    sandbox:
+      destinatario: email.teste.aw12@gmail.com
+  auth:
+    provider-url: http://localhost:8080
+  jwt:
+    keystore:
+      jks-location: ${JKS_LOCATION}
+      password: ${JKS_PASSWORD}
+      keypair-alias: ${JKS_KEYPAIR_ALIAS}

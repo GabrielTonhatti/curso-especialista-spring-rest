@@ -1,0 +1,39 @@
+package com.algaworks.algafood.core.springdoc;
+
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Parameter(
+        in = ParameterIn.QUERY,
+        name = "clienteId",
+        description = "ID do cliente para filtro da pesquisa",
+        schema = @Schema(type = "integer", defaultValue = "1")
+)
+@Parameter(
+        in = ParameterIn.QUERY,
+        name = "restauranteId",
+        description = "ID do restaurante para filtro da pesquisa",
+        schema = @Schema(type = "integer", defaultValue = "1")
+)
+@Parameter(
+        in = ParameterIn.QUERY,
+        name = "dataCriacaoInicio",
+        description = "Data/hora de criação inicial para filtro da pesquisa",
+        example = "2019-12-01T00:00:00Z"
+)
+@Parameter(
+        in = ParameterIn.QUERY,
+        name = "dataCriacaoFim",
+        description = "Data/hora de criação final para filtro da pesquisa",
+        example = "2019-12-02T23:59:59Z"
+)
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD, ElementType.ANNOTATION_TYPE})
+public @interface PedidoFilterParameter {
+}
