@@ -9,11 +9,15 @@ import java.util.Date;
 
 @Setter
 @Getter
-@AllArgsConstructor
 public class VendaDiaria {
 
     private Date data;
     private Long totalVendas;
     private BigDecimal totalFaturado;
 
+    public VendaDiaria(java.sql.Date data, Long totalVendas, BigDecimal totalFaturado) {
+        this.data = new Date(data.getTime());
+        this.totalVendas = totalVendas;
+        this.totalFaturado = totalFaturado;
+    }
 }
