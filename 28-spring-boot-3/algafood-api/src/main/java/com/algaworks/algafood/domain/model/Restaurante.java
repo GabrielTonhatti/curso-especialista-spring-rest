@@ -1,12 +1,12 @@
 package com.algaworks.algafood.domain.model;
 
 import com.algaworks.algafood.core.validation.ValorZeroIncluiDescricao;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;

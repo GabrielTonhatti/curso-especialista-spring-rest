@@ -16,7 +16,7 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 
 import static com.algaworks.algafood.core.security.CheckSecurity.Restaurante.PodeGerenciarFuncionamento;
